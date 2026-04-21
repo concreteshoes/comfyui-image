@@ -6,11 +6,11 @@ can_write_to() {
     [ -z "$target" ] && return 1
 
     if [ -d "$target" ]; then
-        touch "$target/.write_test" 2>/dev/null || return 1
+        touch "$target/.write_test" 2> /dev/null || return 1
         rm -f "$target/.write_test"
     else
-        mkdir -p "$target" 2>/dev/null || return 1
-        touch "$target/.write_test" 2>/dev/null || return 1
+        mkdir -p "$target" 2> /dev/null || return 1
+        touch "$target/.write_test" 2> /dev/null || return 1
         rm -f "$target/.write_test"
     fi
 
@@ -36,15 +36,17 @@ fi
 
 mkdir -p "$NETWORK_VOLUME"
 export NETWORK_VOLUME
+sed -i '/^export NETWORK_VOLUME=/d' /etc/profile.d/container_env.sh
+echo "export NETWORK_VOLUME=\"$NETWORK_VOLUME\"" >> /etc/profile.d/container_env.sh
 
 # Helper functions for cleaner output
 status_msg() { echo -e "\n---> $1"; }
 
 # Try to find full tcmalloc first, fallback to minimal
-TCMALLOC_PATH=$(ldconfig -p 2>/dev/null | grep -E 'libtcmalloc\.so' | head -n1 | awk '{print $NF}')
+TCMALLOC_PATH=$(ldconfig -p 2> /dev/null | grep -E 'libtcmalloc\.so' | head -n1 | awk '{print $NF}')
 
 if [ -z "$TCMALLOC_PATH" ]; then
-    TCMALLOC_PATH=$(ldconfig -p 2>/dev/null | grep -E 'libtcmalloc_minimal\.so' | head -n1 | awk '{print $NF}')
+    TCMALLOC_PATH=$(ldconfig -p 2> /dev/null | grep -E 'libtcmalloc_minimal\.so' | head -n1 | awk '{print $NF}')
 fi
 
 # Apply if found
@@ -86,10 +88,10 @@ jupyter-lab --ip=0.0.0.0 --allow-root --no-browser \
 USE_EXTRA_MODEL_PATHS=false
 if [ "$IS_DEV" = "true" ] && [ "$NETWORK_VOLUME" = "/workspace" ]; then
     echo "IS_DEV is true and NETWORK_VOLUME is /workspace. Setting up extra model paths..."
-    
+
     # Create /models/diffusion_models directory
     mkdir -p /models/diffusion_models
-    
+
     # Copy all .safetensors files from $NETWORK_VOLUME/ComfyUI/models/diffusion_models to /models/diffusion_models in background
     if [ -d "$NETWORK_VOLUME/ComfyUI/models/diffusion_models" ]; then
         echo "Copying .safetensors files from $NETWORK_VOLUME/ComfyUI/models/diffusion_models to /models/diffusion_models in background..."
@@ -152,19 +154,19 @@ echo "🔄 Checking for updates and new dependencies..."
 find "$CUSTOM_NODES_DIR" -maxdepth 1 -type d -not -path "$CUSTOM_NODES_DIR" | while read -r node_path; do
     if [ -d "$node_path/.git" ]; then
         node_name=$(basename "$node_path")
-        
+
         # Check the 'mtime' (modified time) of requirements.txt before pulling
         REQ_FILE="$node_path/requirements.txt"
         BEFORE_MOD=0
-        [ -f "$REQ_FILE" ] && BEFORE_MOD=$(stat -c %Y "$REQ_FILE" 2>/dev/null || stat -f %m "$REQ_FILE" 2>/dev/null)
+        [ -f "$REQ_FILE" ] && BEFORE_MOD=$(stat -c %Y "$REQ_FILE" 2> /dev/null || stat -f %m "$REQ_FILE" 2> /dev/null)
 
         # Perform the update
         (cd "$node_path" && git pull --ff-only -q > /dev/null 2>&1)
 
         # Check if requirements.txt exists and if it was updated
         if [ -f "$REQ_FILE" ]; then
-            AFTER_MOD=$(stat -c %Y "$REQ_FILE" 2>/dev/null || stat -f %m "$REQ_FILE" 2>/dev/null)
-            
+            AFTER_MOD=$(stat -c %Y "$REQ_FILE" 2> /dev/null || stat -f %m "$REQ_FILE" 2> /dev/null)
+
             if [ "$BEFORE_MOD" != "$AFTER_MOD" ]; then
                 echo "📦 New dependencies detected for $node_name. Installing..."
                 # Use --no-cache-dir to save space on your volume
@@ -197,10 +199,10 @@ download_model() {
 
     # Simple corruption check: file < 10MB or .aria2 files
     if [ -f "$full_path" ]; then
-        local size_bytes=$(stat -f%z "$full_path" 2>/dev/null || stat -c%s "$full_path" 2>/dev/null || echo 0)
+        local size_bytes=$(stat -f%z "$full_path" 2> /dev/null || stat -c%s "$full_path" 2> /dev/null || echo 0)
         local size_mb=$((size_bytes / 1024 / 1024))
 
-        if [ "$size_bytes" -lt 10485760 ]; then  # Less than 10MB
+        if [ "$size_bytes" -lt 10485760 ]; then # Less than 10MB
             echo "🗑️  Deleting corrupted file (${size_mb}MB < 10MB): $full_path"
             rm -f "$full_path"
         else
@@ -213,7 +215,7 @@ download_model() {
     if [ -f "${full_path}.aria2" ]; then
         echo "🗑️  Deleting .aria2 control file: ${full_path}.aria2"
         rm -f "${full_path}.aria2"
-        rm -f "$full_path"  # Also remove any partial file
+        rm -f "$full_path" # Also remove any partial file
     fi
 
     echo "📥 Downloading $destination_file to $destination_dir..."
@@ -270,7 +272,7 @@ fi
 if [ "${DOWNLOAD_Z_IMAGE_TURBO:-false}" = "true" ]; then
     echo "📥 download_z_image_turbo is set to true. Downloading Z-Image Turbo..."
     download_model "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/diffusion_models/z_image_turbo_bf16.safetensors" "$DIFFUSION_MODELS_DIR/z_image_turbo_bf16.safetensors"
-    
+
     # These will skip instantly if Base already downloaded them, but ensures Turbo works if Base was set to false
     download_model "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/text_encoders/qwen_3_4b.safetensors" "$TEXT_ENCODERS_DIR/qwen_3_4b.safetensors"
     download_model "https://huggingface.co/modelzpalace/ae.safetensors/resolve/main/ae.safetensors" "$VAE_DIR/z_image_ae.safetensors"
@@ -326,7 +328,7 @@ for TARGET_DIR in "${!MODEL_CATEGORIES[@]}"; do
         # Strip potential whitespace
         CLEAN_ID=$(echo "$MODEL_ID" | xargs)
         [ -z "$CLEAN_ID" ] && continue
-        
+
         echo "🚀 Scheduling download: $CLEAN_ID to $TARGET_DIR"
         (cd "$TARGET_DIR" && download_with_aria.py -m "$CLEAN_ID") &
         ((download_count++))
@@ -379,7 +381,7 @@ mkdir -p "$CONFIG_PATH"
 # Create the config file if it doesn't exist
 if [ ! -f "$CONFIG_FILE" ]; then
     echo "Creating config.ini..."
-    cat <<EOL > "$CONFIG_FILE"
+    cat << EOL > "$CONFIG_FILE"
 [default]
 preview_method = auto
 git_exe =
@@ -444,8 +446,8 @@ nohup $COMFYUI_CMD > "$NETWORK_VOLUME/comfyui_nohup.log" 2>&1 &
 
 # Health check
 until curl --silent --fail "$URL" --output /dev/null; do
-  echo "🔄 ComfyUI Starting Up... You can view the startup logs here: $NETWORK_VOLUME/comfyui_nohup.log"
-  sleep 2
+    echo "🔄 ComfyUI Starting Up... You can view the startup logs here: $NETWORK_VOLUME/comfyui_nohup.log"
+    sleep 2
 done
 
 echo "🚀 ComfyUI is ready"
@@ -493,8 +495,8 @@ if [ -n "${SSH_PUBLIC_KEY:-}" ]; then
     chmod 600 /root/.ssh/authorized_keys
 
     # Avoid duplicates
-    grep -qxF "$SSH_PUBLIC_KEY" /root/.ssh/authorized_keys 2>/dev/null || \
-        echo "$SSH_PUBLIC_KEY" >> /root/.ssh/authorized_keys
+    grep -qxF "$SSH_PUBLIC_KEY" /root/.ssh/authorized_keys 2> /dev/null \
+        || echo "$SSH_PUBLIC_KEY" >> /root/.ssh/authorized_keys
 fi
 
 /usr/sbin/sshd
@@ -502,4 +504,3 @@ fi
 echo "✅ SSH ready."
 
 sleep infinity
-

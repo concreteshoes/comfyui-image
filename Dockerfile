@@ -8,21 +8,18 @@ ENV DEBIAN_FRONTEND=noninteractive \
     CMAKE_BUILD_PARALLEL_LEVEL=8 \
     PATH="/opt/venv/bin:$PATH"
 
-# 1. System Dependencies, Python 3.11 PPA & SSH Setup
+# 1. System Dependencies, SSH Setup
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && \
-    apt-get install -y --no-install-recommends software-properties-common && \
-    add-apt-repository ppa:deadsnakes/ppa && \
-    apt-get update && \
     apt-get install -y --no-install-recommends \
-        python3.11 python3.11-venv python3.11-dev python3-pip \
+        python3 python3-venv python3-dev python3-pip \
         curl unzip ffmpeg ninja-build git aria2 git-lfs wget vim rsync \
         libgl1 libglib2.0-0 libgoogle-perftools4 build-essential gcc openssh-server && \
     \
-    # Setup Python 3.11 defaults
-    ln -sf /usr/bin/python3.11 /usr/bin/python && \
+    # Setup defaults
+    ln -sf /usr/bin/python3 /usr/bin/python && \
     ln -sf /usr/bin/pip3 /usr/bin/pip && \
-    python3.11 -m venv /opt/venv && \
+    python3 -m venv /opt/venv && \
     \
     # Surgical SSH Config (applies changes whether commented or active)
     mkdir -p /root/.ssh /var/run/sshd && \
@@ -32,27 +29,30 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# 2. Stable PyTorch 2.9 Stack (2026 Release)
+# 2. Stable PyTorch 2.9.1 Stack
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install --no-cache-dir \
-        torch==2.9.0+cu128 \
-        torchvision==0.24.0+cu128 \
-        torchaudio==2.9.0+cu128 \
+        torch==2.9.1+cu128 \
+        torchvision==0.24.1+cu128 \
+        torchaudio==2.9.1+cu128 \
         --index-url https://download.pytorch.org/whl/cu128
 
-# 3. Core Tooling & SageAttention
+# 3. Core Tooling
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install --no-cache-dir packaging setuptools wheel triton sageattention
+    pip install --no-cache-dir packaging setuptools wheel triton==3.5.1
 
 # 4. Runtime libraries & Comfy-CLI
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install --no-cache-dir pyyaml gdown comfy-cli jupyterlab jupyterlab-lsp \
+    pip install --no-cache-dir pyyaml comfy-cli jupyterlab jupyterlab-lsp \
         jupyter-server jupyter-server-terminals ipykernel \
         jupyterlab_code_formatter opencv-python-headless qwen-vl-utils>=0.0.8
 
 RUN curl -fsSL https://rclone.org/install.sh -o /tmp/rclone_install.sh && \
     bash /tmp/rclone_install.sh && \
     rm /tmp/rclone_install.sh
+
+# Establishing workspace
+WORKDIR /workspace
 
 # ------------------------------------------------------------
 # ComfyUI & Custom Nodes install (CircleCI Heartbeat Version)

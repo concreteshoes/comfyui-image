@@ -1,5 +1,9 @@
 # ComfyUI Qwen2512, Edit-2511 & Z-Image Turbo/Base & Chroma1 HD w/ Sage Attention for CUDA 12.8
 
+### Deploy
+- RunPod  - https://tinyurl.com/mvrh8eeh
+- Vast.ai - https://tinyurl.com/mrx8ubjm
+
 ### Variables Selection
 
 For the models you want to use, place `true` between the quotes.

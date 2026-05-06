@@ -1,17 +1,58 @@
-# ComfyUI Qwen2512, Edit-2511 & Z-Image Turbo/Base w/ Sage Attention for CUDA 12.8
+# ComfyUI Qwen2512, Edit-2511 & Z-Image Turbo/Base & Chroma1 HD w/ Sage Attention for CUDA 12.8
 
 ### Variables Selection
 
-Z-Image Base and Qwen 2512 download by default if you don't want them set the variables to `false`
-the rest need to be toggled by setting them to `true`.
+For the models you want to use, place `true` between the quotes.
 
 ```env
-DOWNLOAD_QWEN_FULL=""
-DOWNLOAD_QWEN_EDIT_2511=""
 DOWNLOAD_QWEN_2512=""
+DOWNLOAD_QWEN_EDIT_2511=""
 DOWNLOAD_Z_IMAGE_BASE=""
 DOWNLOAD_Z_IMAGE_TURBO=""
+DOWNLOAD_CHROMA1_HD=""
 ```
+Q8 GGUF versions (DiT only):
+```env
+DOWNLOAD_QWEN_2512_GGUF=""
+DOWNLOAD_QWEN_EDIT_2511_GGUF=""
+DOWNLOAD_Z_IMAGE_BASE_GGUF=""
+DOWNLOAD_Z_IMAGE_TURBO_GGUF=""
+DOWNLOAD_CHROMA1_HD_GGUF=""
+```
+
+ComfyUI is set to pass the text encoder with fp8 flag by default, if you don't want
+that set the following flag to `false`.
+```env
+USE_FP8_TEXT_ENC=""
+```
+Pre-installed custom nodes:
+
+- ComfyUI-GGUF
+- ComfyUI_UltimateSDUpscale
+- ComfyUI-KJNodes
+- rgthree-comfy
+- ComfyUI-VAE-Utils
+- ComfyUI-FSampler
+- ComfyUI_JPS-Nodes
+- ComfyUI_Comfyroll_CustomNodes
+- comfy-plasma
+- ComfyUI-Impact-Pack
+- RES4LYF
+- ComfyUI-Easy-Use
+- was-node-suite-comfyui
+- ComfyUI-Logic
+- ComfyUI_essentials
+- cg-image-picker
+- ComfyUI_LayerStyle
+- ComfyUI-Impact-Subpack
+- ComfyUI-Detail-Daemon
+- comfyui-mixlab-nodes
+- ComfyUI_LayerStyle_Advance
+- mikey_nodes
+- cg-use-everywhere
+- CRT-Nodes
+- comfyui_controlnet_aux
+- ComfyLiterals
 
 ### Auth Tokens
 

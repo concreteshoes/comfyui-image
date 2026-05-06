@@ -37,15 +37,37 @@ RUN --mount=type=cache,target=/root/.cache/pip \
         torchaudio==2.9.1+cu128 \
         --index-url https://download.pytorch.org/whl/cu128
 
-# 3. Core Tooling
+# 3. Core Tooling & Critical ML Libraries
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install --no-cache-dir packaging setuptools wheel triton==3.5.1
+    pip install --no-cache-dir \
+    packaging \
+    setuptools \
+    wheel \
+    triton==3.5.1 \
+    accelerate \
+    transformers>=4.48.0 \
+    diffusers \
+    peft \
+    sentencepiece \
+    einops \
+    scipy \
+    timm \
+    gguf
 
 # 4. Runtime libraries & Comfy-CLI
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install --no-cache-dir pyyaml comfy-cli jupyterlab jupyterlab-lsp \
-        jupyter-server jupyter-server-terminals ipykernel \
-        jupyterlab_code_formatter opencv-python-headless qwen-vl-utils>=0.0.8
+    pip install --no-cache-dir \
+    pyyaml \
+    comfy-cli \
+    jupyterlab \
+    jupyterlab-lsp \
+    jupyter-server \
+    jupyter-server-terminals \
+    ipykernel \
+    jupyterlab_code_formatter \
+    opencv-python-headless \
+    qwen-vl-utils>=0.0.8 \
+    onnxruntime-gpu
 
 RUN curl -fsSL https://rclone.org/install.sh -o /tmp/rclone_install.sh && \
     bash /tmp/rclone_install.sh && \
@@ -65,6 +87,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     # 2. Move into the directory once
     cd /ComfyUI/custom_nodes; \
     for repo in \
+        https://github.com/city96/ComfyUI-GGUF.git \
         https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git \
         https://github.com/kijai/ComfyUI-KJNodes.git \
         https://github.com/rgthree/rgthree-comfy.git \
@@ -88,6 +111,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
         https://github.com/bash-j/mikey_nodes.git \
         https://github.com/chrisgoringe/cg-use-everywhere.git \
         https://github.com/PGCRT/CRT-Nodes.git \
+        https://github.com/Fannovel16/comfyui_controlnet_aux.git \
         https://github.com/M1kep/ComfyLiterals.git; \
     do \
         repo_dir=$(basename "$repo" .git); \

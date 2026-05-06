@@ -362,38 +362,42 @@ download_model() {
 # ==========================================
 # 1. CORE SHARED MODELS (Always Downloaded)
 # ==========================================
-download_model "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b.safetensors" "$TEXT_ENCODERS_DIR/qwen_2.5_vl_7b.safetensors"
-download_model "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors" "$VAE_DIR/qwen_image_vae.safetensors"
 download_model "https://huggingface.co/spacepxl/Wan2.1-VAE-upscale2x/resolve/main/Wan2.1_VAE_upscale2x_imageonly_real_v1.safetensors" "$VAE_DIR/Wan2.1_VAE_upscale2x_imageonly_real_v1.safetensors"
-download_model "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/main/Qwen-Image-Lightning-8steps-V1.1.safetensors" "$LORAS_DIR/Qwen-Image-Lightning-8steps-V1.1.safetensors"
+download_model "https://huggingface.co/lightx2v/Qwen-Image-2512-Lightning/resolve/main/Qwen-Image-2512-Lightning-8steps-V1.0-bf16.safetensors" "$LORAS_DIR/Qwen-Image-2512-Lightning-8steps-V1.0-bf16.safetensors"
+download_model "https://huggingface.co/lightx2v/Qwen-Image-Edit-2511-Lightning/resolve/main/Qwen-Image-Edit-2511-Lightning-8steps-V1.0-bf16.safetensors" "$LORAS_DIR/Qwen-Image-Edit-2511-Lightning-8steps-V1.0-bf16.safetensors"
 download_model "https://objectstorage.us-phoenix-1.oraclecloud.com/n/ax6ygfvpvzka/b/open-modeldb-files/o/1x-ITF-SkinDiffDetail-Lite-v1.pth" "$UPSCALE_MODELS_DIR/1x-ITF-SkinDiffDetail-Lite-v1.pth"
 
 # ==========================================
-# 2. QWEN GENERATION (2512 Defaults to True)
+# 2. QWEN GENERATION (2512 & Edit-2511)
 # ==========================================
-if [ "${DOWNLOAD_QWEN_2512:-true}" = "true" ]; then
+if [ "${DOWNLOAD_QWEN_2512:-}" = "true" ]; then
     echo "📥 Downloading Qwen Image 2512..."
     download_model "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_2512_bf16.safetensors" "$DIFFUSION_MODELS_DIR/qwen_image_2512_bf16.safetensors"
+    download_model "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b.safetensors" "$TEXT_ENCODERS_DIR/qwen_2.5_vl_7b.safetensors"
+    download_model "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors" "$VAE_DIR/qwen_image_vae.safetensors"
 fi
-
-# ==========================================
-# 3. OPTIONAL QWEN MODELS (Default to False)
-# ==========================================
-if [ "${DOWNLOAD_QWEN_FULL:-false}" = "true" ]; then
-    echo "📥 Downloading Qwen Image Full Base..."
-    download_model "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_bf16.safetensors" "$DIFFUSION_MODELS_DIR/qwen_image_bf16.safetensors"
+if [ "${DOWNLOAD_QWEN_2512_GGUF:-}" = "true" ]; then
+    echo "📥 Downloading Qwen Image 2512 GGUF (Q8)..."
+    download_model "https://huggingface.co/unsloth/Qwen-Image-2512-GGUF/resolve/main/qwen-image-2512-Q8_0.gguf" "$DIFFUSION_MODELS_DIR/qwen-image-2512-Q8_0.gguf"
+    download_model "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b.safetensors" "$TEXT_ENCODERS_DIR/qwen_2.5_vl_7b.safetensors"
+    download_model "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors" "$VAE_DIR/qwen_image_vae.safetensors"
 fi
-
-if [ "${DOWNLOAD_QWEN_EDIT_2511:-false}" = "true" ]; then
+if [ "${DOWNLOAD_QWEN_EDIT_2511:-}" = "true" ]; then
     echo "📥 Downloading Qwen Image Edit 2511..."
     download_model "https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_2511_bf16.safetensors" "$DIFFUSION_MODELS_DIR/qwen_image_edit_2511_bf16.safetensors"
+    download_model "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b.safetensors" "$TEXT_ENCODERS_DIR/qwen_2.5_vl_7b.safetensors"
+    download_model "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors" "$VAE_DIR/qwen_image_vae.safetensors"
 fi
-
+if [ "${DOWNLOAD_QWEN_EDIT_2511_GGUF:-}" = "true" ]; then
+    echo "📥 Downloading Qwen Image Edit 2511 GGUF (Q8)..."
+    download_model "https://huggingface.co/unsloth/Qwen-Image-Edit-2511-GGUF/resolve/main/qwen-image-edit-2511-Q8_0.gguf" "$DIFFUSION_MODELS_DIR/qwen-image-edit-2511-Q8_0.gguf"
+    download_model "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b.safetensors" "$TEXT_ENCODERS_DIR/qwen_2.5_vl_7b.safetensors"
+    download_model "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors" "$VAE_DIR/qwen_image_vae.safetensors"
+fi
 # ==========================================
-# 4. Z-IMAGE MODELS
+# 3. Z-IMAGE MODELS
 # ==========================================
-# Default Z-Image Base by default
-if [ "${DOWNLOAD_Z_IMAGE_BASE:-true}" = "true" ]; then
+if [ "${DOWNLOAD_Z_IMAGE_BASE:-}" = "true" ]; then
     echo "📥 download_z_image_base is set to true. Downloading Z-Image Base models..."
     download_model "https://huggingface.co/Comfy-Org/z_image_base/resolve/main/split_files/diffusion_models/z_image_base_bf16.safetensors" "$DIFFUSION_MODELS_DIR/z_image_base_bf16.safetensors"
     download_model "https://huggingface.co/Comfy-Org/z_image_base/resolve/main/split_files/text_encoders/qwen_3_4b.safetensors" "$TEXT_ENCODERS_DIR/qwen_3_4b.safetensors"
@@ -402,16 +406,49 @@ if [ "${DOWNLOAD_Z_IMAGE_BASE:-true}" = "true" ]; then
 else
     echo "⏭️  download_z_image_base is not set to true. Skipping Z-Image Base model downloads."
 fi
-
-# Optional Z-Image Turbo (Defaults to False)
-if [ "${DOWNLOAD_Z_IMAGE_TURBO:-false}" = "true" ]; then
+if [ "${DOWNLOAD_Z_IMAGE_BASE_GGUF:-}" = "true" ]; then
+    echo "📥 Downloading Z-Image Base GGUF (Q8)..."
+    download_model "https://huggingface.co/unsloth/Z-Image-GGUF/resolve/main/z-image-Q8_0.gguf" "$DIFFUSION_MODELS_DIR/z-image-Q8_0.gguf"
+    # Text encoder and VAE are shared with non-GGUF — skip if already downloaded
+    download_model "https://huggingface.co/Comfy-Org/z_image_base/resolve/main/split_files/text_encoders/qwen_3_4b.safetensors" "$TEXT_ENCODERS_DIR/qwen_3_4b.safetensors"
+    download_model "https://huggingface.co/modelzpalace/ae.safetensors/resolve/main/ae.safetensors" "$VAE_DIR/z_image_ae.safetensors"
+    echo "✅ Z-Image Base GGUF model downloads scheduled"
+else
+    echo "⏭️  download_z_image_base_gguf is not set to true. Skipping Z-Image Base GGUF downloads."
+fi
+if [ "${DOWNLOAD_Z_IMAGE_TURBO:-}" = "true" ]; then
     echo "📥 download_z_image_turbo is set to true. Downloading Z-Image Turbo..."
     download_model "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/diffusion_models/z_image_turbo_bf16.safetensors" "$DIFFUSION_MODELS_DIR/z_image_turbo_bf16.safetensors"
-
     # These will skip instantly if Base already downloaded them, but ensures Turbo works if Base was set to false
     download_model "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/text_encoders/qwen_3_4b.safetensors" "$TEXT_ENCODERS_DIR/qwen_3_4b.safetensors"
     download_model "https://huggingface.co/modelzpalace/ae.safetensors/resolve/main/ae.safetensors" "$VAE_DIR/z_image_ae.safetensors"
     echo "✅ Z-Image Turbo model downloads scheduled"
+fi
+if [ "${DOWNLOAD_Z_IMAGE_TURBO_GGUF:-}" = "true" ]; then
+    echo "📥 Downloading Z-Image Turbo GGUF (Q8)..."
+    download_model "https://huggingface.co/unsloth/Z-Image-Turbo-GGUF/resolve/main/z-image-turbo-Q8_0.gguf" "$DIFFUSION_MODELS_DIR/z-image-turbo-Q8_0.gguf"
+    # These will skip instantly if Base or non-GGUF Turbo already downloaded them
+    download_model "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/text_encoders/qwen_3_4b.safetensors" "$TEXT_ENCODERS_DIR/qwen_3_4b.safetensors"
+    download_model "https://huggingface.co/modelzpalace/ae.safetensors/resolve/main/ae.safetensors" "$VAE_DIR/z_image_ae.safetensors"
+    echo "✅ Z-Image Turbo GGUF model downloads scheduled"
+fi
+
+# ==========================================
+# 3. CHROMA1 HD
+# ==========================================
+if [ "${DOWNLOAD_CHROMA1_HD:-}" = "true" ]; then
+    echo "📥 download_chroma1_hd is set to true. Downloading Chroma1 HD..."
+    download_model "https://huggingface.co/lodestones/Chroma1-HD/resolve/main/Chroma1-HD.safetensors" "$DIFFUSION_MODELS_DIR/Chroma1-HD.safetensors"
+    download_model "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp16.safetensors" "$TEXT_ENCODERS_DIR/t5xxl_fp16.safetensors"
+    download_model "https://huggingface.co/lodestones/Chroma/resolve/main/ae.safetensors" "$VAE_DIR/chroma1_hd_ae.safetensors"
+    echo "✅ Chroma1 HD model downloads scheduled"
+fi
+if [ "${DOWNLOAD_CHROMA1_HD_GGUF:-}" = "true" ]; then
+    echo "📥 Downloading Chroma1 HD GGUF (Q8)..."
+    download_model "https://huggingface.co/silveroxides/Chroma1-HD-GGUF/resolve/main/Chroma1-HD-Q8_0.gguf" "$DIFFUSION_MODELS_DIR/Chroma1-HD-Q8_0.gguf"
+    download_model "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp16.safetensors" "$TEXT_ENCODERS_DIR/t5xxl_fp16.safetensors"
+    download_model "https://huggingface.co/lodestones/Chroma/resolve/main/ae.safetensors" "$VAE_DIR/chroma1_hd_ae.safetensors"
+    echo "✅ Chroma1 HD GGUF model downloads scheduled"
 fi
 
 # Download MultiAngle.safetensors to LORAS_DIR using wget
@@ -544,8 +581,15 @@ echo "Config file setup complete!"
 echo "Default preview method updated to 'auto'"
 
 # Start with base flags
-# Added --fp8_e4m3fn-text-enc as requested for Qwen/Z-Image efficiency
-LAUNCH_FLAGS="--listen --fp8_e4m3fn-text-enc --preview-method auto"
+LAUNCH_FLAGS="--listen --preview-method auto"
+
+# Add FP8 text encoder flag if enabled (default: true)
+if [ "${USE_FP8_TEXT_ENC:-true}" = "true" ]; then
+    LAUNCH_FLAGS="$LAUNCH_FLAGS --fp8_e4m3fn-text-enc"
+    status_msg "FP8 text encoder enabled"
+else
+    status_msg "FP8 text encoder disabled"
+fi
 
 # Add Extra Model Paths if YAML exists
 YAML_PATH="/comfyui-qwen/src/extra_model_paths.yaml"
@@ -567,14 +611,56 @@ COMFYUI_CMD="$PYTHON_BIN $COMFYUI_DIR/main.py $LAUNCH_FLAGS"
 URL="http://127.0.0.1:8188"
 status_msg "▶️ Starting ComfyUI with flags: $LAUNCH_FLAGS"
 nohup $COMFYUI_CMD > "$NETWORK_VOLUME/comfyui_nohup.log" 2>&1 &
+echo $! > /tmp/comfyui.pid # Save PID for restart
 
-# Health check
+# Debugging mode
+cat > /usr/local/bin/comfyui-restart << 'EOF'
+#!/bin/bash
+
+PYTHON_BIN="/opt/venv/bin/python3"
+COMFYUI_DIR="${NETWORK_VOLUME:-/workspace}/ComfyUI"
+LOG_FILE="${NETWORK_VOLUME:-/workspace}/comfyui_nohup.log"
+
+echo "Stopping ComfyUI..."
+kill $(cat /tmp/comfyui.pid 2>/dev/null) 2>/dev/null
+sleep 2
+
+echo "Relaunching with debug flags..."
+BASE_FLAGS="--listen --preview-method auto --use-sage-attention"
+
+echo "Base flags: $BASE_FLAGS"
+echo "Extra flags: $@"
+
+nohup $PYTHON_BIN $COMFYUI_DIR/main.py \
+    $BASE_FLAGS $@ \
+    > "$LOG_FILE" 2>&1 &
+
+echo $! > /tmp/comfyui.pid
+echo "ComfyUI restarted PID $(cat /tmp/comfyui.pid)"
+EOF
+
+chmod +x /usr/local/bin/comfyui-restart
+
+# Timeout logic
+counter=0
+max_wait=100 # safer for cold starts + model init
+
 until curl --silent --fail "$URL" --output /dev/null; do
-    echo "🔄 ComfyUI Starting Up... You can view the startup logs here: $NETWORK_VOLUME/comfyui_nohup.log"
-    sleep 2
+    if [ $counter -ge $max_wait ]; then
+        echo "❌ Timeout: ComfyUI failed to start within ${max_wait}s."
+        echo "📋 Check logs: tail -n 100 $NETWORK_VOLUME/comfyui_nohup.log"
+        exit 1
+    fi
+
+    echo "🔄 ComfyUI Starting... (${counter}s/${max_wait}s)"
+    sleep 5
+    counter=$((counter + 5))
 done
 
-echo "🚀 ComfyUI is ready"
+# Final Verification
+if curl --silent --fail "$URL" --output /dev/null; then
+    echo "🚀 ComfyUI is ready."
+fi
 
 echo ""
 echo "================================================"

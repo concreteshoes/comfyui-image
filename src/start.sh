@@ -255,6 +255,8 @@ LORAS_DIR="$NETWORK_VOLUME/ComfyUI/models/loras"
 TEXT_ENCODERS_DIR="$NETWORK_VOLUME/ComfyUI/models/text_encoders"
 VAE_DIR="$NETWORK_VOLUME/ComfyUI/models/vae"
 UPSCALE_MODELS_DIR="$NETWORK_VOLUME/ComfyUI/models/upscale_models"
+JOYCAPTION_DIR="$NETWORK_VOLUME/ComfyUI/models/LLavacheckpoints/llama-joycaption-beta-one-hf-llava"
+FLORENCE2_DIR="$NETWORK_VOLUME/ComfyUI/models/florence2/base-PromptGen"
 
 if [ ! -d "$COMFYUI_DIR" ]; then
     status_msg "First Boot: Moving ComfyUI to Volume..."
@@ -360,7 +362,7 @@ download_model() {
 }
 
 # ==========================================
-# 1. CORE SHARED MODELS (Always Downloaded)
+# CORE SHARED MODELS (Always Downloaded)
 # ==========================================
 download_model "https://huggingface.co/spacepxl/Wan2.1-VAE-upscale2x/resolve/main/Wan2.1_VAE_upscale2x_imageonly_real_v1.safetensors" "$VAE_DIR/Wan2.1_VAE_upscale2x_imageonly_real_v1.safetensors"
 download_model "https://huggingface.co/lightx2v/Qwen-Image-2512-Lightning/resolve/main/Qwen-Image-2512-Lightning-8steps-V1.0-bf16.safetensors" "$LORAS_DIR/Qwen-Image-2512-Lightning-8steps-V1.0-bf16.safetensors"
@@ -368,7 +370,7 @@ download_model "https://huggingface.co/lightx2v/Qwen-Image-Edit-2511-Lightning/r
 download_model "https://objectstorage.us-phoenix-1.oraclecloud.com/n/ax6ygfvpvzka/b/open-modeldb-files/o/1x-ITF-SkinDiffDetail-Lite-v1.pth" "$UPSCALE_MODELS_DIR/1x-ITF-SkinDiffDetail-Lite-v1.pth"
 
 # ==========================================
-# 2. QWEN GENERATION (2512 & Edit-2511)
+# QWEN GENERATION (2512 & Edit-2511)
 # ==========================================
 if [ "${DOWNLOAD_QWEN_2512:-}" = "true" ]; then
     echo "📥 Downloading Qwen Image 2512..."
@@ -395,7 +397,7 @@ if [ "${DOWNLOAD_QWEN_EDIT_2511_GGUF:-}" = "true" ]; then
     download_model "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors" "$VAE_DIR/qwen_image_vae.safetensors"
 fi
 # ==========================================
-# 3. Z-IMAGE MODELS
+# Z-IMAGE MODELS
 # ==========================================
 if [ "${DOWNLOAD_Z_IMAGE_BASE:-}" = "true" ]; then
     echo "📥 download_z_image_base is set to true. Downloading Z-Image Base models..."
@@ -434,10 +436,10 @@ if [ "${DOWNLOAD_Z_IMAGE_TURBO_GGUF:-}" = "true" ]; then
 fi
 
 # ==========================================
-# 3. CHROMA1 HD
+# CHROMA1 HD
 # ==========================================
 if [ "${DOWNLOAD_CHROMA1_HD:-}" = "true" ]; then
-    echo "📥 download_chroma1_hd is set to true. Downloading Chroma1 HD..."
+    echo "📥 Downloading Chroma1 HD..."
     download_model "https://huggingface.co/lodestones/Chroma1-HD/resolve/main/Chroma1-HD.safetensors" "$DIFFUSION_MODELS_DIR/Chroma1-HD.safetensors"
     download_model "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp16.safetensors" "$TEXT_ENCODERS_DIR/t5xxl_fp16.safetensors"
     download_model "https://huggingface.co/lodestones/Chroma/resolve/main/ae.safetensors" "$VAE_DIR/chroma1_hd_ae.safetensors"
@@ -449,6 +451,73 @@ if [ "${DOWNLOAD_CHROMA1_HD_GGUF:-}" = "true" ]; then
     download_model "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp16.safetensors" "$TEXT_ENCODERS_DIR/t5xxl_fp16.safetensors"
     download_model "https://huggingface.co/lodestones/Chroma/resolve/main/ae.safetensors" "$VAE_DIR/chroma1_hd_ae.safetensors"
     echo "✅ Chroma1 HD GGUF model downloads scheduled"
+fi
+
+# ==========================================
+# JOYCAPTION BETA ONE
+# ==========================================
+if [ "${DOWNLOAD_JOYCAPTION:-}" = "true" ]; then
+    echo "📥 Downloading JoyCaption Beta One..."
+
+    # 1. Config & Tokenizer Files
+    download_model "https://huggingface.co/fancyfeast/llama-joycaption-beta-one-hf-llava/resolve/main/config.json" "$JOYCAPTION_DIR/config.json"
+    download_model "https://huggingface.co/fancyfeast/llama-joycaption-beta-one-hf-llava/resolve/main/generation_config.json" "$JOYCAPTION_DIR/generation_config.json"
+    download_model "https://huggingface.co/fancyfeast/llama-joycaption-beta-one-hf-llava/resolve/main/model.safetensors.index.json" "$JOYCAPTION_DIR/model.safetensors.index.json"
+    download_model "https://huggingface.co/fancyfeast/llama-joycaption-beta-one-hf-llava/resolve/main/preprocessor_config.json" "$JOYCAPTION_DIR/preprocessor_config.json"
+    download_model "https://huggingface.co/fancyfeast/llama-joycaption-beta-one-hf-llava/resolve/main/special_tokens_map.json" "$JOYCAPTION_DIR/special_tokens_map.json"
+    download_model "https://huggingface.co/fancyfeast/llama-joycaption-beta-one-hf-llava/resolve/main/tokenizer.json" "$JOYCAPTION_DIR/tokenizer.json"
+    download_model "https://huggingface.co/fancyfeast/llama-joycaption-beta-one-hf-llava/resolve/main/tokenizer_config.json" "$JOYCAPTION_DIR/tokenizer_config.json"
+
+    # 2. Sharded Weights
+    download_model "https://huggingface.co/fancyfeast/llama-joycaption-beta-one-hf-llava/resolve/main/model-00001-of-00004.safetensors" "$JOYCAPTION_DIR/model-00001-of-00004.safetensors"
+    download_model "https://huggingface.co/fancyfeast/llama-joycaption-beta-one-hf-llava/resolve/main/model-00002-of-00004.safetensors" "$JOYCAPTION_DIR/model-00002-of-00004.safetensors"
+    download_model "https://huggingface.co/fancyfeast/llama-joycaption-beta-one-hf-llava/resolve/main/model-00003-of-00004.safetensors" "$JOYCAPTION_DIR/model-00003-of-00004.safetensors"
+    download_model "https://huggingface.co/fancyfeast/llama-joycaption-beta-one-hf-llava/resolve/main/model-00004-of-00004.safetensors" "$JOYCAPTION_DIR/model-00004-of-00004.safetensors"
+
+    echo "✅ JoyCaption Beta One model downloads scheduled"
+fi
+
+# ==========================================
+# FLORENCE-2 NSFW V2
+# ==========================================
+if [ "${DOWNLOAD_FLORENCE2:-}" = "true" ]; then
+    echo "📥 Downloading Florence-2 NSFW finetune..."
+
+    # Base URL for the finetune
+    NSFW_BASE_URL="https://huggingface.co/ljnlonoljpiljm/florence-2-base-nsfw-v2/resolve/main"
+
+    # 1. Core Configuration & Tokenizer
+    download_model "$NSFW_BASE_URL/config.json" "$FLORENCE2_DIR/config.json"
+    download_model "$NSFW_BASE_URL/generation_config.json" "$FLORENCE2_DIR/generation_config.json"
+    download_model "$NSFW_BASE_URL/preprocessor_config.json" "$FLORENCE2_DIR/preprocessor_config.json"
+    download_model "$NSFW_BASE_URL/added_tokens.json" "$FLORENCE2_DIR/added_tokens.json"
+    download_model "$NSFW_BASE_URL/merges.txt" "$FLORENCE2_DIR/merges.txt"
+    download_model "$NSFW_BASE_URL/special_tokens_map.json" "$FLORENCE2_DIR/special_tokens_map.json"
+    download_model "$NSFW_BASE_URL/tokenizer.json" "$FLORENCE2_DIR/tokenizer.json"
+    download_model "$NSFW_BASE_URL/tokenizer_config.json" "$FLORENCE2_DIR/tokenizer_config.json"
+    download_model "$NSFW_BASE_URL/vocab.json" "$FLORENCE2_DIR/vocab.json"
+
+    # 2. The Weights
+    download_model "$NSFW_BASE_URL/model.safetensors" "$FLORENCE2_DIR/model.safetensors"
+
+    # 3. Microsoft Processor (Handles the actual image bounding boxes/cropping)
+    download_model "https://huggingface.co/microsoft/Florence-2-base/resolve/main/processing_florence2.py" "$FLORENCE2_DIR/processing_florence2.py"
+
+    # 4. APPLY THE KIJAI / LAYERSTYLE PATCH
+    # We copy the patched modeling and config files directly from the custom node directory
+    # to overwrite any missing or outdated files, ensuring transformers >= 4.45 compatibility.
+    echo "🔧 Applying Transformers compatibility patch for Florence-2..."
+    LAYERSTYLE_MODELS_DIR="/ComfyUI/custom_nodes/ComfyUI_LayerStyle_Advance/florence2_models"
+
+    if [ -d "$LAYERSTYLE_MODELS_DIR" ]; then
+        cp "$LAYERSTYLE_MODELS_DIR/modeling_florence2.py" "$FLORENCE2_DIR/"
+        cp "$LAYERSTYLE_MODELS_DIR/configuration_florence2.py" "$FLORENCE2_DIR/"
+        echo "✅ Florence-2 patched successfully."
+    else
+        echo "⚠️ WARNING: LayerStyle advance folder not found at $LAYERSTYLE_MODELS_DIR. Patch skipped."
+    fi
+
+    echo "✅ Florence-2 NSFW scheduled"
 fi
 
 # Download MultiAngle.safetensors to LORAS_DIR using wget

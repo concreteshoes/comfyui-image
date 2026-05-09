@@ -31,7 +31,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 
 # 2. Stable PyTorch 2.9.1 Stack
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install --no-cache-dir \
+    pip install \
         torch==2.9.1+cu128 \
         torchvision==0.24.1+cu128 \
         torchaudio==2.9.1+cu128 \
@@ -39,7 +39,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 # 3. Core Tooling & Critical ML Libraries
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install --no-cache-dir \
+    pip install \
     packaging \
     setuptools \
     wheel \
@@ -52,11 +52,13 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     einops \
     scipy \
     timm \
-    gguf
+    gguf \
+    bitsandbytes \
+    protobuf
 
 # 4. Runtime libraries & Comfy-CLI
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install --no-cache-dir \
+    pip install \
     pyyaml \
     comfy-cli \
     jupyterlab \
@@ -65,9 +67,12 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     jupyter-server-terminals \
     ipykernel \
     jupyterlab_code_formatter \
-    opencv-python-headless \
+    opencv-contrib-python-headless \
     qwen-vl-utils>=0.0.8 \
-    onnxruntime-gpu
+    onnxruntime-gpu \
+    ultralytics \
+    segment-anything \
+    transparent-background
 
 RUN curl -fsSL https://rclone.org/install.sh -o /tmp/rclone_install.sh && \
     bash /tmp/rclone_install.sh && \
@@ -117,17 +122,33 @@ RUN --mount=type=cache,target=/root/.cache/pip \
         repo_dir=$(basename "$repo" .git); \
         echo "CIRCLECI_HEARTBEAT: Installing $repo_dir into $(pwd)..."; \
         \
-        # 3. Use --depth 1 for faster clones and smaller image size
+        # Clone with depth 1
         if [ "$repo" = "https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git" ]; then \
             git clone --depth 1 --recursive "$repo"; \
         else \
             git clone --depth 1 "$repo"; \
         fi; \
         \
-        # 4. Use relative paths since we are already in the directory
+        # 4. Harmonize and Install Requirements
         if [ -f "$repo_dir/requirements.txt" ]; then \
+            echo "🛠️ Harmonizing Dependencies for $repo_dir..."; \
+            \
+            # 1. Harmonize OpenCV
+            sed -i -E 's/opencv-(python|contrib-python)(-headless)?(==[0-9.]+)?/opencv-contrib-python-headless/g' "$repo_dir/requirements.txt"; \
+            \
+            # 2. Harmonize bitsandbytes (Strips versions like ==0.41.1 or >=0.35)
+            sed -i -E 's/bitsandbytes([>=<~= ]+[0-9.]+)?/bitsandbytes/g' "$repo_dir/requirements.txt"; \
+            \
+            # 3. Harmonize protobuf
+            sed -i -E 's/protobuf([>=<~= ]+[0-9.]+)?/protobuf/g' "$repo_dir/requirements.txt"; \
+            \
+            # 4. Harmonize onnxruntime
+            sed -i -E 's/^onnxruntime$/onnxruntime-gpu/g' "$repo_dir/requirements.txt"; \
+            \
             pip install --progress-bar off -v -r "$repo_dir/requirements.txt"; \
         fi; \
+        \
+        # 5. Run install.py if it exists
         if [ -f "$repo_dir/install.py" ]; then \
             python "$repo_dir/install.py"; \
         fi; \
@@ -140,6 +161,9 @@ COPY Eyes.pt /Eyes.pt
 COPY 4xLSDIR.pth /4xLSDIR.pth
 
 RUN chmod +x /start_script.sh /docker-entrypoint.sh
+
+# Fix for JoyCaption / Protobuf compatibility
+ENV PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/start_script.sh"]

@@ -45,7 +45,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     wheel \
     triton==3.5.1 \
     accelerate \
-    transformers>=4.48.0 \
+    "transformers>=4.48.0" \
     diffusers \
     peft \
     sentencepiece \
@@ -68,7 +68,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     ipykernel \
     jupyterlab_code_formatter \
     opencv-contrib-python-headless \
-    qwen-vl-utils>=0.0.8 \
+    "qwen-vl-utils>=0.0.8" \
     onnxruntime-gpu \
     ultralytics \
     segment-anything \

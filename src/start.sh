@@ -649,15 +649,33 @@ fi
 echo "Config file setup complete!"
 echo "Default preview method updated to 'auto'"
 
+# GPU VRAM check
+# Grabs the total memory of the first GPU in MB
+GPU_VRAM_MB=$(nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits | head -n 1)
+VRAM_THRESHOLD=32000 # 32GB in MB
+
 # Start with base flags
 LAUNCH_FLAGS="--listen --preview-method auto"
 
-# Add FP8 text encoder flag if enabled (default: true)
+# Add FP8 flags if enabled
 if [ "${USE_FP8_TEXT_ENC:-true}" = "true" ]; then
     LAUNCH_FLAGS="$LAUNCH_FLAGS --fp8_e4m3fn-text-enc"
     status_msg "FP8 text encoder enabled"
+fi
+
+if [ "${USE_FP8_MODEL:-}" = "true" ]; then
+    LAUNCH_FLAGS="$LAUNCH_FLAGS --fp8_e4m3fn-unet"
+    status_msg "FP8 model weight casting enabled (E4M3FN)"
+fi
+
+# Memory Optimization based on VRAM
+if [ "$GPU_VRAM_MB" -ge "$VRAM_THRESHOLD" ]; then
+    echo "🚀 High VRAM detected (32GB+). Enabling --highvram."
+    LAUNCH_FLAGS="$LAUNCH_FLAGS --highvram"
 else
-    status_msg "FP8 text encoder disabled"
+    echo "⚖️ Standard VRAM detected."
+    # ComfyUI natively uses --weight-dtype to force model precision
+    LAUNCH_FLAGS="$LAUNCH_FLAGS --medvram"
 fi
 
 # Add Extra Model Paths if YAML exists

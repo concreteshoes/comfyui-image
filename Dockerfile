@@ -37,16 +37,36 @@ RUN --mount=type=cache,target=/root/.cache/pip \
         torchaudio==2.9.1+cu128 \
         --index-url https://download.pytorch.org/whl/cu128
 
-# 3. Core Tooling & Critical ML Libraries
+# 3. Install the build tools first
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install packaging setuptools wheel "numpy<2.4" Pillow
+
+
+# 4. Core Tooling & Critical ML Libraries
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install \
-    packaging \
-    setuptools \
-    wheel \
     triton==3.5.1 \
     accelerate \
-    "transformers>=4.48.0" \
+    transformers \
     diffusers \
+    huggingface_hub \
+    numba \
+    matplotlib \
+    scikit-image \
+    scikit-learn \
+    mediapipe \
+    omegaconf \
+    imageio-ffmpeg \
+    soundfile \
+    loguru \
+    addict \
+    yapf \
+    trimesh \
+    pymatting \
+    blend_modes \
+    colour-science \
+    openai \
+    hydra-core \
     peft \
     sentencepiece \
     einops \
@@ -68,7 +88,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     ipykernel \
     jupyterlab_code_formatter \
     opencv-contrib-python-headless \
-    "qwen-vl-utils>=0.0.8" \
+    qwen-vl-utils \
     onnxruntime-gpu \
     ultralytics \
     segment-anything \
@@ -104,10 +124,10 @@ RUN --mount=type=cache,target=/root/.cache/pip \
         https://github.com/ltdrdata/ComfyUI-Impact-Pack.git \
         https://github.com/ClownsharkBatwing/RES4LYF.git \
         https://github.com/yolain/ComfyUI-Easy-Use.git \
-        https://github.com/WASasquatch/was-node-suite-comfyui.git \
+        https://github.com/ltdrdata/was-node-suite-comfyui.git \
         https://github.com/theUpsider/ComfyUI-Logic.git \
         https://github.com/cubiq/ComfyUI_essentials.git \
-        https://github.com/chrisgoringe/cg-image-picker.git \
+        https://github.com/chrisgoringe/cg-image-filter.git \
         https://github.com/chflame163/ComfyUI_LayerStyle.git \
         https://github.com/ltdrdata/ComfyUI-Impact-Subpack.git \
         https://github.com/Jonseed/ComfyUI-Detail-Daemon.git \
@@ -134,7 +154,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
             echo "🛠️ Harmonizing Dependencies for $repo_dir..."; \
             \
             # 1. Harmonize OpenCV
-            sed -i -E 's/opencv-(python|contrib-python)(-headless)?(==[0-9.]+)?/opencv-contrib-python-headless/g' "$repo_dir/requirements.txt"; \
+            sed -i -E 's/opencv-(python|contrib-python)(-headless)?(\[[a-zA-Z0-9_-]+\])?(==[0-9.]+)?/opencv-contrib-python-headless/g' "$repo_dir/requirements.txt"; \
             \
             # 2. Harmonize bitsandbytes (Strips versions like ==0.41.1 or >=0.35)
             sed -i -E 's/bitsandbytes([>=<~= ]+[0-9.]+)?/bitsandbytes/g' "$repo_dir/requirements.txt"; \
@@ -143,7 +163,23 @@ RUN --mount=type=cache,target=/root/.cache/pip \
             sed -i -E 's/protobuf([>=<~= ]+[0-9.]+)?/protobuf/g' "$repo_dir/requirements.txt"; \
             \
             # 4. Harmonize onnxruntime
-            sed -i -E 's/^onnxruntime$/onnxruntime-gpu/g' "$repo_dir/requirements.txt"; \
+            sed -i -E 's/^onnxruntime([>=<~= ]+[0-9.]+)?$/onnxruntime-gpu/g' "$repo_dir/requirements.txt"; \
+            \
+            # 5. Strip torch stack (already installed with specific CUDA build)
+            sed -i -E 's/^torch([>=<~= ]+[0-9.]+)?$/# torch already installed/g' "$repo_dir/requirements.txt"; \
+            \
+            sed -i -E 's/^torchvision([>=<~= ]+[0-9.]+)?$/# torchvision already installed/g' "$repo_dir/requirements.txt"; \
+            \
+            sed -i -E 's/^torchaudio([>=<~= ]+[0-9.]+)?$/# torchaudio already installed/g' "$repo_dir/requirements.txt"; \
+            \
+            # 6. Strip numpy (already pinned to <2.4)
+            sed -i -E 's/^numpy([>=<~= ]+[0-9.]+)?$/# numpy already installed/g' "$repo_dir/requirements.txt"; \
+            \
+            # 7. Strip numba version pin (managed globally to stay compatible with numpy)
+            sed -i -E 's/^numba([>=<~= ]+[0-9.]+)?$/numba/g' "$repo_dir/requirements.txt"; \
+            \
+            # 8. Strip clip-interrogator
+            sed -i -E 's/^clip[-_]interrogator([>=<~= ]+[0-9.]+)?$/clip-interrogator/g' "$repo_dir/requirements.txt"; \
             \
             pip install --progress-bar off -v -r "$repo_dir/requirements.txt"; \
         fi; \

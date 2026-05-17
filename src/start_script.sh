@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 git clone https://github.com/concreteshoes/comfyui-qwen.git
 
 # Export environment variables
@@ -35,7 +37,7 @@ extract_env() {
     chmod +x /etc/profile.d/container_env.sh
 }
 
-extract_env "DOWNLOAD_*|CIVITAI_TOKEN|SSH_PUBLIC_KEY"
+extract_env "DOWNLOAD_*|USE_FP8_*|CIVITAI_TOKEN|SSH_PUBLIC_KEY"
 chmod +x /etc/profile.d/container_env.sh
 
 mv comfyui-qwen/src/start.sh /

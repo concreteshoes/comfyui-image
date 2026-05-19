@@ -42,6 +42,7 @@ Pre-installed custom nodes:
 - ComfyUI-GGUF
 - ComfyUI_UltimateSDUpscale
 - ComfyUI-KJNodes
+- ComfyUI-HuggingFace
 - rgthree-comfy
 - ComfyUI-VAE-Utils
 - ComfyUI-FSampler
@@ -69,6 +70,7 @@ Pre-installed custom nodes:
 ### Auth Tokens
 
 ```env
+HUGGINGFACE_API_KEY=""
 CIVITAI_TOKEN=""
 SSH_PUBLIC_KEY=""
 ```

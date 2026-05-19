@@ -115,6 +115,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
         https://github.com/city96/ComfyUI-GGUF.git \
         https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git \
         https://github.com/kijai/ComfyUI-KJNodes.git \
+        https://github.com/huchukato/ComfyUI-HuggingFace.git \
         https://github.com/rgthree/rgthree-comfy.git \
         https://github.com/spacepxl/ComfyUI-VAE-Utils.git \
         https://github.com/obisin/ComfyUI-FSampler.git \

@@ -244,7 +244,7 @@ fi
 if [ -f "$NETWORK_VOLUME/additional_params.sh" ]; then
     chmod +x "$NETWORK_VOLUME/additional_params.sh"
     echo "Executing additional_params.sh..."
-    "$NETWORK_VOLUME/additional_params.sh"
+    "$NETWORK_VOLUME/comfyui-qwen/src/additional_params.sh"
 else
     echo "No additional_params.sh found. Skipping..."
 fi

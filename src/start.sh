@@ -291,17 +291,20 @@ else
     fi
 fi
 
+# Define base paths
 COMFYUI_DIR="$NETWORK_VOLUME/ComfyUI"
-CUSTOM_NODES_DIR="$NETWORK_VOLUME/ComfyUI/custom_nodes"
 WORKFLOW_DIR="$NETWORK_VOLUME/ComfyUI/user/default/workflows"
+CUSTOM_NODES_DIR="$NETWORK_VOLUME/ComfyUI/custom_nodes"
 MODEL_WHITELIST_DIR="$NETWORK_VOLUME/ComfyUI/user/default/ComfyUI-Impact-Subpack/model-whitelist.txt"
 DIFFUSION_MODELS_DIR="$NETWORK_VOLUME/ComfyUI/models/diffusion_models"
 LORAS_DIR="$NETWORK_VOLUME/ComfyUI/models/loras"
+CIVITAI_GGUF="$NETWORK_VOLUME/ComfyUI/models/unet"
 TEXT_ENCODERS_DIR="$NETWORK_VOLUME/ComfyUI/models/text_encoders"
 VAE_DIR="$NETWORK_VOLUME/ComfyUI/models/vae"
 UPSCALE_MODELS_DIR="$NETWORK_VOLUME/ComfyUI/models/upscale_models"
 JOYCAPTION_DIR="$NETWORK_VOLUME/ComfyUI/models/LLavacheckpoints/llama-joycaption-beta-one-hf-llava"
 FLORENCE2_DIR="$NETWORK_VOLUME/ComfyUI/models/florence2/base-PromptGen"
+mkdir -p "$CUSTOM_NODES_DIR"
 
 if [ ! -d "$COMFYUI_DIR" ]; then
     status_msg "First Boot: Moving ComfyUI to Volume..."
@@ -314,21 +317,7 @@ else
     echo "✅ Sync complete."
 fi
 
-# Update ComfyUI to master branch and pull latest changes
-echo "Updating ComfyUI repository..."
-cd "$COMFYUI_DIR"
-git checkout master
-git pull
-echo "✅ ComfyUI repository updated"
-
-# Install ComfyUI requirements
-echo "Installing ComfyUI requirements..."
-$PYTHON_BIN -m pip install -r "$NETWORK_VOLUME/ComfyUI/requirements.txt"
-echo "✅ ComfyUI requirements installed"
-
-# Updating custom nodes
-mkdir -p "$CUSTOM_NODES_DIR"
-# 1. SMART SYNC: Update all existing nodes automatically
+# SMART SYNC: Update all existing nodes automatically
 echo "🔄 Checking for updates and new dependencies..."
 find "$CUSTOM_NODES_DIR" -maxdepth 1 -type d -not -path "$CUSTOM_NODES_DIR" | while read -r node_path; do
     if [ -d "$node_path/.git" ]; then
@@ -347,7 +336,20 @@ find "$CUSTOM_NODES_DIR" -maxdepth 1 -type d -not -path "$CUSTOM_NODES_DIR" | wh
             AFTER_MOD=$(stat -c %Y "$REQ_FILE" 2> /dev/null || stat -f %m "$REQ_FILE" 2> /dev/null)
 
             if [ "$BEFORE_MOD" != "$AFTER_MOD" ]; then
-                echo "📦 New dependencies detected for $node_name. Installing..."
+                echo "📦 New dependencies detected for $node_name. Harmonizing and installing..."
+
+                # 🛡️ RE-APPLY DOCKERFILE HARMONIZATION PATCHES
+                sed -i -E 's/opencv-(python|contrib-python)(-headless)?(\[[a-zA-Z0-9_-]+\])?(==[0-9.]+)?/opencv-contrib-python-headless/g' "$REQ_FILE"
+                sed -i -E 's/bitsandbytes([>=<~= ]+[0-9.]+)?/bitsandbytes/g' "$REQ_FILE"
+                sed -i -E 's/protobuf([>=<~= ]+[0-9.]+)?/protobuf/g' "$REQ_FILE"
+                sed -i -E 's/^onnxruntime([>=<~= ]+[0-9.]+)?$/onnxruntime-gpu/g' "$REQ_FILE"
+                sed -i -E 's/^torch([>=<~= ]+[0-9.]+)?$/# torch already installed/g' "$REQ_FILE"
+                sed -i -E 's/^torchvision([>=<~= ]+[0-9.]+)?$/# torchvision already installed/g' "$REQ_FILE"
+                sed -i -E 's/^torchaudio([>=<~= ]+[0-9.]+)?$/# torchaudio already installed/g' "$REQ_FILE"
+                sed -i -E 's/^numpy([>=<~= ]+[0-9.]+)?$/# numpy already installed/g' "$REQ_FILE"
+                sed -i -E 's/^numba([>=<~= ]+[0-9.]+)?$/numba/g' "$REQ_FILE"
+                sed -i -E 's/^clip[-_]interrogator([>=<~= ]+[0-9.]+)?$/clip-interrogator/g' "$REQ_FILE"
+
                 # Use --no-cache-dir to save space on your volume
                 $PYTHON_BIN -m pip install --no-cache-dir -r "$REQ_FILE" > /dev/null 2>&1
             fi

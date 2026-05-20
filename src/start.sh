@@ -725,14 +725,6 @@ else
     LAUNCH_FLAGS="$LAUNCH_FLAGS --medvram"
 fi
 
-# Add Extra Model Paths if YAML exists
-YAML_PATH="/comfyui-qwen/src/extra_model_paths.yaml"
-if [ -f "$YAML_PATH" ]; then
-    status_msg "Patching extra_model_paths.yaml..."
-    sed -i "s|/workspace|$NETWORK_VOLUME|g" "$YAML_PATH"
-    LAUNCH_FLAGS="$LAUNCH_FLAGS --extra-model-paths-config $YAML_PATH"
-fi
-
 # Add SageAttention
 if [ "$SAGE_ATTENTION_AVAILABLE" = "true" ]; then
     LAUNCH_FLAGS="$LAUNCH_FLAGS --use-sage-attention"

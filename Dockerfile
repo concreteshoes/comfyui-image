@@ -4,9 +4,9 @@ FROM nvidia/cuda:12.8.1-cudnn-devel-ubuntu24.04
 # Consolidated environment variables
 ENV DEBIAN_FRONTEND=noninteractive \
     PIP_PREFER_BINARY=1 \
+    PIP_BREAK_SYSTEM_PACKAGES=1 \
     PYTHONUNBUFFERED=1 \
-    CMAKE_BUILD_PARALLEL_LEVEL=8 \
-    PATH="/opt/venv/bin:$PATH"
+    CMAKE_BUILD_PARALLEL_LEVEL=8
 
 # 1. System Dependencies, SSH Setup
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
@@ -19,7 +19,6 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     # Setup defaults
     ln -sf /usr/bin/python3 /usr/bin/python && \
     ln -sf /usr/bin/pip3 /usr/bin/pip && \
-    python3 -m venv /opt/venv && \
     \
     # Surgical SSH Config (applies changes whether commented or active)
     mkdir -p /root/.ssh /var/run/sshd && \

@@ -1,4 +1,4 @@
-# ComfyUI Qwen2512, Edit-2511 & Z-Image Turbo/Base & Chroma1 HD w/ Sage Attention for CUDA 12.8
+# ComfyUI Qwen2512, Edit-2511, Z-Image Turbo/Base & Chroma1 HD w/ Flash & Sage Attn for CUDA 12.8
 
 ## 🛡️ Environment Security & Updates
 
@@ -48,8 +48,8 @@ comfyui-restart --disable-smart-memory --lowvram
 ```
 
 ### Deploy
-- RunPod  - https://tinyurl.com/mvrh8eeh
-- Vast.ai - https://tinyurl.com/mrx8ubjm
+- RunPod  - https://tinyurl.com/runpod-comfyui-image
+- Vast.ai - https://tinyurl.com/vast-comfyui-image
 
 ### Variables Selection
 
@@ -125,24 +125,22 @@ See [LICENSE](LICENSE) for full terms.
 - rgthree-comfy
 - ComfyUI-VAE-Utils
 - ComfyUI-FSampler
-- ComfyUI_JPS-Nodes
-- ComfyUI_Comfyroll_CustomNodes
-- comfy-plasma
 - ComfyUI-Impact-Pack
 - RES4LYF
 - ComfyUI-Easy-Use
 - was-node-suite-comfyui
 - ComfyUI-Logic
 - ComfyUI_essentials
-- cg-image-picker
+- cg-image-filter
+- ComfyUI-segment-anything-2
 - ComfyUI_LayerStyle
 - ComfyUI-Impact-Subpack
 - ComfyUI-Detail-Daemon
-- comfyui-mixlab-nodes
 - ComfyUI_LayerStyle_Advance
 - mikey_nodes
 - cg-use-everywhere
 - CRT-Nodes
+- ComfyUI-RMBG
 - comfyui_controlnet_aux
 - ComfyLiterals
 - ComfyUI-Florence2

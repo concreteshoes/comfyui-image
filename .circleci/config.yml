@@ -48,7 +48,7 @@ jobs:
           name: Build & push image
           command: |
             TAG="<< parameters.tag_name >>"
-            IMG="docker.io/${DOCKERHUB_USER}/comfyui-qwen"
+            IMG="docker.io/${DOCKERHUB_USER}/comfyui-image"
 
             echo "Building ${IMG}:${TAG}"
             docker build --progress=plain -t "${IMG}:${TAG}" .

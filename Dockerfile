@@ -13,7 +13,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
     CMAKE_BUILD_PARALLEL_LEVEL=8 \
     PIP_TIMEOUT=100 \
-    ENV SAM2_BUILD_CUDA=0
+    SAM2_BUILD_CUDA=0
 
 # 1. System Dependencies, SSH Setup
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \

@@ -19,7 +19,7 @@ Method 1: The Drag-and-Drop GUI (Via File Browser)
 - Open File Browser at http://localhost:8080.
 - Navigate into ComfyUI/custom_nodes/ and drop the zip file right into the window.
 - Right-click the uploaded zip file inside File Browser, click Extract
-- Navigate to `comfyui-qwen/src` and execute the script `bash comfyui-sync.sh`
+- Navigate to `comfyui-image/src` and execute the script `bash comfyui-sync.sh`
 
 Method 2: The Native Terminal Route (Via SSH)
 - Connect to the instance via terminal.
@@ -28,7 +28,7 @@ Method 2: The Native Terminal Route (Via SSH)
 cd ComfyUI/custom_nodes
 git clone https://github.com/example/new-custom-node.git
 ```
-- Navigate to `comfyui-qwen/src` and execute the script `bash comfyui-sync.sh`
+- Navigate to `comfyui-image/src` and execute the script `bash comfyui-sync.sh`
 
 ### 🔧 Troubleshooting & Live Process Restarts
 If ComfyUI crashes due to a hardware Out-of-Memory (OOM) error, or if you want to alter performance configurations
@@ -48,8 +48,8 @@ comfyui-restart --disable-smart-memory --lowvram
 ```
 
 ### Deploy
-- RunPod  - https://tinyurl.com/comfyui-image-runpod
-- Vast.ai - https://tinyurl.com/comfyui-image-vast-ai
+- RunPod  - https://tinyurl.com/ycxnvfh8
+- Vast.ai - https://tinyurl.com/m4z59n6m
 
 ### Variables Selection
 

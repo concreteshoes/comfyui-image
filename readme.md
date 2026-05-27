@@ -9,8 +9,8 @@ This heavyweight template is engineered as a self healing container. To prevent 
 
 ### 🔄 How to Safely Update Nodes
 You do not need to update anything manually. This image features a **Smart Boot-Time Synchronizer**:
-1. Every time you restart or boot the container, the backend script scans your persistent storage volume.
-2. It automatically pulls the latest `git` commits for all your custom nodes.
+1. Every time you restart or boot the container, the backend script scans your storage volume.
+2. It automatically pulls the latest `git` commits for all custom nodes.
 3. If a node requires new dependencies, the custom compiler intercepts the `requirements.txt`, sanitizes the version pins to match the environment, and updates them safely.
 
 ### 📦 How to add other custom nodes:
@@ -38,10 +38,6 @@ use the live-debugger utility via your SSH terminal:
 ```bash
 comfyui-restart
 ```
-Bypass a specific flag dynamically (e.g., disable FP8 text encoding for testing):
-```bash
-USE_FP8_TEXT_ENC=false comfyui-restart
-```
 Append completely custom troubleshooting or memory optimization flags on the fly:
 ```bash
 comfyui-restart --disable-smart-memory --lowvram
@@ -49,33 +45,23 @@ comfyui-restart --disable-smart-memory --lowvram
 
 ### Deploy
 - RunPod  - https://tinyurl.com/ycxnvfh8
-- Vast.ai - https://tinyurl.com/ycnx6ccy
+- Vast.ai - https://tinyurl.com/9f5pxa8w
 
 ### Variables Selection
 
-For the models you want to use, place `true` between the quotes.
+Set the models you want to download to `true`. Text encoders are fp8.
 
 ```env
-DOWNLOAD_QWEN_2512=""
-DOWNLOAD_QWEN_EDIT_2511=""
-DOWNLOAD_Z_IMAGE_BASE=""
-DOWNLOAD_Z_IMAGE_TURBO=""
-DOWNLOAD_CHROMA1_HD=""
-```
-Q8 GGUF versions (DiT only):
-```env
-DOWNLOAD_QWEN_2512_GGUF=""
-DOWNLOAD_QWEN_EDIT_2511_GGUF=""
-DOWNLOAD_Z_IMAGE_BASE_GGUF=""
-DOWNLOAD_Z_IMAGE_TURBO_GGUF=""
-DOWNLOAD_CHROMA1_HD_GGUF=""
-```
-
-ComfyUI is set to pass the text encoder with fp8 flag by default, if you don't want
-that set the following flag to `false`. Optionally you can enable FP8 for the UNET.
-```env
-USE_FP8_TEXT_ENC=""
-USE_FP8_MODEL=""
+DOWNLOAD_QWEN_2512_FP8=""
+DOWNLOAD_QWEN_2512_GGUF_Q8=""
+DOWNLOAD_QWEN_EDIT_2511_FP8=""
+DOWNLOAD_QWEN_EDIT_2511_GGUF_Q8=""
+DOWNLOAD_Z_IMAGE_BASE_FP8=""
+DOWNLOAD_Z_IMAGE_BASE_GGUF_Q8=""
+DOWNLOAD_Z_IMAGE_TURBO_FP8=""
+DOWNLOAD_Z_IMAGE_TURBO_GGUF_Q8=""
+DOWNLOAD_CHROMA1_HD_FP8=""
+DOWNLOAD_CHROMA1_HD_GGUF_Q8=""
 ```
 
 NSFW friendly captioners - JoyCaption Beta One & Florence nsfw v2:

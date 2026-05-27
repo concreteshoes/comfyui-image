@@ -426,32 +426,32 @@ download_model() {
 # ============================================================
 
 # 1. Download Target Diffusion Weights Based on Selections
-if [ "${DOWNLOAD_QWEN_2512:-}" = "true" ]; then
-    echo "📥 Downloading Qwen Image 2512 (BF16)..."
-    download_model "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_2512_bf16.safetensors" "$DIFFUSION_MODELS_DIR/qwen_image_2512_bf16.safetensors"
+if [ "${DOWNLOAD_QWEN_2512_FP8:-}" = "true" ]; then
+    echo "📥 Downloading Qwen Image 2512 fp8_e4m3fn_scaled..."
+    download_model "https://huggingface.co/lightx2v/Qwen-Image-2512-Lightning/resolve/main/qwen_image_2512_fp8_e4m3fn_scaled.safetensors" "$DIFFUSION_MODELS_DIR/qwen_image_2512_fp8_e4m3fn_scaled.safetensors"
 fi
 
-if [ "${DOWNLOAD_QWEN_2512_GGUF:-}" = "true" ]; then
-    echo "📥 Downloading Qwen Image 2512 GGUF (Q8)..."
+if [ "${DOWNLOAD_QWEN_2512_GGUF_Q8:-}" = "true" ]; then
+    echo "📥 Downloading Qwen Image 2512 GGUF Q8..."
     download_model "https://huggingface.co/unsloth/Qwen-Image-2512-GGUF/resolve/main/qwen-image-2512-Q8_0.gguf" "$GGUF_DIR/qwen-image-2512-Q8_0.gguf"
 fi
 
-if [ "${DOWNLOAD_QWEN_EDIT_2511:-}" = "true" ]; then
-    echo "📥 Downloading Qwen Image Edit 2511 (BF16)..."
-    download_model "https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_2511_bf16.safetensors" "$DIFFUSION_MODELS_DIR/qwen_image_edit_2511_bf16.safetensors"
+if [ "${DOWNLOAD_QWEN_EDIT_2511_FP8:-}" = "true" ]; then
+    echo "📥 Downloading Qwen Image Edit 2511 fp8_e4m3fn_scaled..."
+    download_model "https://huggingface.co/lightx2v/Qwen-Image-Edit-2511-Lightning/resolve/main/qwen_image_edit_2511_fp8_e4m3fn_scaled.safetensors" "$DIFFUSION_MODELS_DIR/qwen_image_edit_2511_fp8_e4m3fn_scaled.safetensors"
 fi
 
-if [ "${DOWNLOAD_QWEN_EDIT_2511_GGUF:-}" = "true" ]; then
-    echo "📥 Downloading Qwen Image Edit 2511 GGUF (Q8)..."
+if [ "${DOWNLOAD_QWEN_EDIT_2511_GGUF_Q8:-}" = "true" ]; then
+    echo "📥 Downloading Qwen Image Edit 2511 GGUF Q8..."
     download_model "https://huggingface.co/unsloth/Qwen-Image-Edit-2511-GGUF/resolve/main/qwen-image-edit-2511-Q8_0.gguf" "$GGUF_DIR/qwen-image-edit-2511-Q8_0.gguf"
 fi
 
 # 2. Shared Sub-Assets (Executes if ANY Qwen flavor flag is enabled)
-if [ "${DOWNLOAD_QWEN_2512:-}" = "true" ] || [ "${DOWNLOAD_QWEN_2512_GGUF:-}" = "true" ] || [ "${DOWNLOAD_QWEN_EDIT_2511:-}" = "true" ] || [ "${DOWNLOAD_QWEN_EDIT_2511_GGUF:-}" = "true" ]; then
+if [ "${DOWNLOAD_QWEN_2512_FP8:-}" = "true" ] || [ "${DOWNLOAD_QWEN_2512_GGUF_Q8:-}" = "true" ] || [ "${DOWNLOAD_QWEN_EDIT_2511_FP8:-}" = "true" ] || [ "${DOWNLOAD_QWEN_EDIT_2511_GGUF_Q8:-}" = "true" ]; then
     echo "📥 Downloading shared Qwen Image ecosystem sub-assets..."
 
     # Unified Vision-Language Multimodal Text Encoder (Qwen-2.5-VL 7B Backbone)
-    download_model "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b.safetensors" "$TEXT_ENCODERS_DIR/qwen_2.5_vl_7b.safetensors"
+    download_model "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors" "$TEXT_ENCODERS_DIR/qwen_2.5_vl_7b.safetensors"
 
     # Unified Qwen Image Architecture VAE
     download_model "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors" "$VAE_DIR/qwen_image_vae.safetensors"
@@ -459,7 +459,6 @@ if [ "${DOWNLOAD_QWEN_2512:-}" = "true" ] || [ "${DOWNLOAD_QWEN_2512_GGUF:-}" = 
     # Lightning Loras
     download_model "https://huggingface.co/lightx2v/Qwen-Image-2512-Lightning/resolve/main/Qwen-Image-2512-Lightning-8steps-V1.0-bf16.safetensors" "$LORAS_DIR/Qwen-Image-2512-Lightning-8steps-V1.0-bf16.safetensors"
     download_model "https://huggingface.co/lightx2v/Qwen-Image-Edit-2511-Lightning/resolve/main/Qwen-Image-Edit-2511-Lightning-8steps-V1.0-bf16.safetensors" "$LORAS_DIR/Qwen-Image-Edit-2511-Lightning-8steps-V1.0-bf16.safetensors"
-    download_model "https://huggingface.co/Hearmeman/MultiAngleQwen/resolve/main/MultiAngle.safetensors" "$LORAS_DIR/MultiAngle.safetensors"
 
     echo "📋 Qwen Image pipeline queued for background download"
 fi
@@ -468,33 +467,31 @@ fi
 # Z-IMAGE (BASE & TURBO)
 # ============================================================
 
-# 1. Download Core Diffusion Flavor Based on Selections
-if [ "${DOWNLOAD_Z_IMAGE_BASE:-}" = "true" ]; then
-    echo "📥 Downloading Z-Image Base (BF16)..."
-    download_model "https://huggingface.co/Comfy-Org/z_image_base/resolve/main/split_files/diffusion_models/z_image_base_bf16.safetensors" "$DIFFUSION_MODELS_DIR/z_image_base_bf16.safetensors"
+if [ "${DOWNLOAD_Z_IMAGE_BASE_FP8:-}" = "true" ]; then
+    echo "📥 Downloading Z-Image Base fp8-e4m3fn-scaled..."
+    download_model "https://huggingface.co/drbaph/Z-Image-fp8/resolve/main/z-img_fp8-e4m3fn-scaled.safetensors" "$DIFFUSION_MODELS_DIR/z-img_fp8-e4m3fn-scaled.safetensors"
 fi
 
-if [ "${DOWNLOAD_Z_IMAGE_BASE_GGUF:-}" = "true" ]; then
-    echo "📥 Downloading Z-Image Base GGUF (Q8)..."
+if [ "${DOWNLOAD_Z_IMAGE_BASE_GGUF_Q8:-}" = "true" ]; then
+    echo "📥 Downloading Z-Image Base GGUF Q8..."
     download_model "https://huggingface.co/unsloth/Z-Image-GGUF/resolve/main/z-image-Q8_0.gguf" "$GGUF_DIR/z-image-Q8_0.gguf"
 fi
 
-if [ "${DOWNLOAD_Z_IMAGE_TURBO:-}" = "true" ]; then
-    echo "📥 Downloading Z-Image Turbo (BF16)..."
-    download_model "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/diffusion_models/z_image_turbo_bf16.safetensors" "$DIFFUSION_MODELS_DIR/z_image_turbo_bf16.safetensors"
+if [ "${DOWNLOAD_Z_IMAGE_TURBO_FP8:-}" = "true" ]; then
+    echo "📥 Downloading Z-Image Turbo fp8_scaled_e4m3fn..."
+    download_model "https://huggingface.co/Kijai/Z-Image_comfy_fp8_scaled/resolve/main/z-image-turbo_fp8_scaled_e4m3fn_KJ.safetensors" "$DIFFUSION_MODELS_DIR/z-image-turbo_fp8_scaled_e4m3fn_KJ.safetensors"
 fi
 
-# 2. Shared Sub-Assets (Executes if ANY Z-Image variant flag is enabled)
-if [ "${DOWNLOAD_Z_IMAGE_TURBO_GGUF:-}" = "true" ]; then
-    echo "📥 Downloading Z-Image Turbo GGUF (Q8)..."
+if [ "${DOWNLOAD_Z_IMAGE_TURBO_GGUF_Q8:-}" = "true" ]; then
+    echo "📥 Downloading Z-Image Turbo GGUF Q8..."
     download_model "https://huggingface.co/unsloth/Z-Image-Turbo-GGUF/resolve/main/z-image-turbo-Q8_0.gguf" "$GGUF_DIR/z-image-turbo-Q8_0.gguf"
 fi
 
-if [ "${DOWNLOAD_Z_IMAGE_BASE:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_BASE_GGUF:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_TURBO:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_TURBO_GGUF:-}" = "true" ]; then
+if [ "${DOWNLOAD_Z_IMAGE_BASE_FP8:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_BASE_GGUF_Q8:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_TURBO_FP8:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_TURBO_GGUF_Q8:-}" = "true" ]; then
     echo "📥 Downloading shared Z-Image dependency ecosystem..."
 
     # Unified Multimodal Text Encoder (Qwen-3 4B Backbone)
-    download_model "https://huggingface.co/Comfy-Org/z_image_base/resolve/main/split_files/text_encoders/qwen_3_4b.safetensors" "$TEXT_ENCODERS_DIR/qwen_3_4b.safetensors"
+    download_model "https://huggingface.co/drbaph/Z-Image-fp8/resolve/main/qwen_3_4b_fp8_mixed.safetensors" "$TEXT_ENCODERS_DIR/qwen_3_4b_fp8_mixed.safetensors"
 
     # Target Architecture VAE
     download_model "https://huggingface.co/modelzpalace/ae.safetensors/resolve/main/ae.safetensors" "$VAE_DIR/z_image_ae.safetensors"
@@ -507,22 +504,22 @@ fi
 # ============================================================
 
 # 1. Download Base Diffusion Models Based on Flavor Selection
-if [ "${DOWNLOAD_CHROMA1_HD:-}" = "true" ]; then
-    echo "📥 Downloading Chroma1 HD (FP16)..."
-    download_model "https://huggingface.co/lodestones/Chroma1-HD/resolve/main/Chroma1-HD.safetensors" "$DIFFUSION_MODELS_DIR/Chroma1-HD.safetensors"
+if [ "${DOWNLOAD_CHROMA1_HD_FP8:-}" = "true" ]; then
+    echo "📥 Downloading Chroma1 HD fp8_scaled..."
+    download_model "https://huggingface.co/silveroxides/Chroma1-HD-fp8-scaled/resolve/main/Chroma1-HD-fp8_scaled_defaultloader_hybrid_large_rev2.safetensors" "$DIFFUSION_MODELS_DIR/Chroma1-HD-fp8_scaled_defaultloader_hybrid_large_rev2.safetensors"
 fi
 
-if [ "${DOWNLOAD_CHROMA1_HD_GGUF:-}" = "true" ]; then
-    echo "📥 Downloading Chroma1 HD GGUF (Q8)..."
+if [ "${DOWNLOAD_CHROMA1_HD_GGUF_Q8:-}" = "true" ]; then
+    echo "📥 Downloading Chroma1 HD GGUF Q8..."
     download_model "https://huggingface.co/silveroxides/Chroma1-HD-GGUF/resolve/main/Chroma1-HD-Q8_0.gguf" "$GGUF_DIR/Chroma1-HD-Q8_0.gguf"
 fi
 
 # 2. Shared Sub-Assets (Executes if EITHER or BOTH flags are enabled)
-if [ "${DOWNLOAD_CHROMA1_HD:-}" = "true" ] || [ "${DOWNLOAD_CHROMA1_HD_GGUF:-}" = "true" ]; then
+if [ "${DOWNLOAD_CHROMA1_HD_FP8:-}" = "true" ] || [ "${DOWNLOAD_CHROMA1_HD_GGUF_Q8:-}" = "true" ]; then
     echo "📥 Downloading shared Chroma1 HD pipeline components..."
 
     # Foundational Flux Text Encoders (Both are required for DualCLIPLoader)
-    download_model "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp16.safetensors" "$TEXT_ENCODERS_DIR/t5xxl_fp16.safetensors"
+    download_model "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn_scaled.safetensors" "$TEXT_ENCODERS_DIR/t5xxl_fp8_e4m3fn_scaled.safetensors"
     download_model "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors" "$TEXT_ENCODERS_DIR/clip_l.safetensors"
 
     # Core Chroma VAE
@@ -882,15 +879,15 @@ VRAM_THRESHOLD=32000 # 32GB in MB
 LAUNCH_FLAGS="--listen --preview-method auto"
 
 # Add FP8 flags if enabled
-if [ "${USE_FP8_TEXT_ENC:-true}" = "true" ]; then
-    LAUNCH_FLAGS="$LAUNCH_FLAGS --fp8_e4m3fn-text-enc"
-    status_msg "FP8 text encoder enabled"
-fi
+#if [ "${USE_FP8_TEXT_ENC:-true}" = "true" ]; then
+#    LAUNCH_FLAGS="$LAUNCH_FLAGS --fp8_e4m3fn-text-enc"
+#    status_msg "FP8 text encoder enabled"
+#fi
 
-if [ "${USE_FP8_MODEL:-}" = "true" ]; then
-    LAUNCH_FLAGS="$LAUNCH_FLAGS --fp8_e4m3fn-unet"
-    status_msg "FP8 model weight casting enabled (E4M3FN)"
-fi
+#if [ "${USE_FP8_MODEL:-}" = "true" ]; then
+#    LAUNCH_FLAGS="$LAUNCH_FLAGS --fp8_e4m3fn-unet"
+#    status_msg "FP8 model weight casting enabled (E4M3FN)"
+#fi
 
 # Memory Optimization based on VRAM
 if [ "$GPU_VRAM_MB" -ge "$VRAM_THRESHOLD" ]; then
@@ -947,13 +944,13 @@ VRAM_THRESHOLD=32000
 BASE_FLAGS="--listen --preview-method auto"
 
 # Seamlessly check variable states inside the live shell container
-if [ "${USE_FP8_TEXT_ENC:-true}" = "true" ]; then
-    BASE_FLAGS="$BASE_FLAGS --fp8_e4m3fn-text-enc"
-fi
+#if [ "${USE_FP8_TEXT_ENC:-true}" = "true" ]; then
+#    BASE_FLAGS="$BASE_FLAGS --fp8_e4m3fn-text-enc"
+#fi
 
-if [ "${USE_FP8_MODEL:-}" = "true" ]; then
-    BASE_FLAGS="$BASE_FLAGS --fp8_e4m3fn-unet"
-fi
+#if [ "${USE_FP8_MODEL:-}" = "true" ]; then
+#    BASE_FLAGS="$BASE_FLAGS --fp8_e4m3fn-unet"
+#fi
 
 if [ "$GPU_VRAM_MB" -ge "$VRAM_THRESHOLD" ]; then
     BASE_FLAGS="$BASE_FLAGS --highvram"

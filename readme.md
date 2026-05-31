@@ -45,7 +45,7 @@ comfyui-restart --disable-smart-memory --lowvram
 
 ### Deploy
 - RunPod  - https://tinyurl.com/ycxnvfh8
-- Vast.ai - https://tinyurl.com/9f5pxa8w
+- Vast.ai - https://tinyurl.com/5rmu3knu
 
 ### Variables Selection
 
@@ -53,15 +53,15 @@ Set the models you want to download to `true`. Text encoders are fp8.
 
 ```env
 DOWNLOAD_QWEN_2512_FP8=""
-DOWNLOAD_QWEN_2512_GGUF_Q8=""
+DOWNLOAD_QWEN_2512_GGUF_Q6_K=""
 DOWNLOAD_QWEN_EDIT_2511_FP8=""
-DOWNLOAD_QWEN_EDIT_2511_GGUF_Q8=""
+DOWNLOAD_QWEN_EDIT_2511_GGUF_Q6_K=""
 DOWNLOAD_Z_IMAGE_BASE_FP8=""
-DOWNLOAD_Z_IMAGE_BASE_GGUF_Q8=""
+DOWNLOAD_Z_IMAGE_BASE_GGUF_Q6_K=""
 DOWNLOAD_Z_IMAGE_TURBO_FP8=""
-DOWNLOAD_Z_IMAGE_TURBO_GGUF_Q8=""
+DOWNLOAD_Z_IMAGE_TURBO_GGUF_Q6_K=""
 DOWNLOAD_CHROMA1_HD_FP8=""
-DOWNLOAD_CHROMA1_HD_GGUF_Q8=""
+DOWNLOAD_CHROMA1_HD_GGUF_Q6_K=""
 ```
 
 NSFW friendly captioners - JoyCaption Beta One & Florence nsfw v2:

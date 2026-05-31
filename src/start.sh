@@ -431,9 +431,9 @@ if [ "${DOWNLOAD_QWEN_2512_FP8:-}" = "true" ]; then
     download_model "https://huggingface.co/lightx2v/Qwen-Image-2512-Lightning/resolve/main/qwen_image_2512_fp8_e4m3fn_scaled.safetensors" "$DIFFUSION_MODELS_DIR/qwen_image_2512_fp8_e4m3fn_scaled.safetensors"
 fi
 
-if [ "${DOWNLOAD_QWEN_2512_GGUF_Q8:-}" = "true" ]; then
-    echo "📥 Downloading Qwen Image 2512 GGUF Q8..."
-    download_model "https://huggingface.co/unsloth/Qwen-Image-2512-GGUF/resolve/main/qwen-image-2512-Q8_0.gguf" "$GGUF_DIR/qwen-image-2512-Q8_0.gguf"
+if [ "${DOWNLOAD_QWEN_2512_GGUF_Q6_K:-}" = "true" ]; then
+    echo "📥 Downloading Qwen Image 2512 GGUF Q6_K..."
+    download_model "https://huggingface.co/unsloth/Qwen-Image-2512-GGUF/resolve/main/qwen-image-2512-Q6_K.gguf" "$GGUF_DIR/qwen-image-2512-Q6_K.gguf"
 fi
 
 if [ "${DOWNLOAD_QWEN_EDIT_2511_FP8:-}" = "true" ]; then
@@ -441,13 +441,13 @@ if [ "${DOWNLOAD_QWEN_EDIT_2511_FP8:-}" = "true" ]; then
     download_model "https://huggingface.co/lightx2v/Qwen-Image-Edit-2511-Lightning/resolve/main/qwen_image_edit_2511_fp8_e4m3fn_scaled.safetensors" "$DIFFUSION_MODELS_DIR/qwen_image_edit_2511_fp8_e4m3fn_scaled.safetensors"
 fi
 
-if [ "${DOWNLOAD_QWEN_EDIT_2511_GGUF_Q8:-}" = "true" ]; then
-    echo "📥 Downloading Qwen Image Edit 2511 GGUF Q8..."
-    download_model "https://huggingface.co/unsloth/Qwen-Image-Edit-2511-GGUF/resolve/main/qwen-image-edit-2511-Q8_0.gguf" "$GGUF_DIR/qwen-image-edit-2511-Q8_0.gguf"
+if [ "${DOWNLOAD_QWEN_EDIT_2511_GGUF_Q6_K:-}" = "true" ]; then
+    echo "📥 Downloading Qwen Image Edit 2511 GGUF Q6_K..."
+    download_model "https://huggingface.co/unsloth/Qwen-Image-Edit-2511-GGUF/resolve/main/qwen-image-edit-2511-Q6_K.gguf" "$GGUF_DIR/qwen-image-edit-2511-Q6_K.gguf"
 fi
 
 # 2. Shared Sub-Assets (Executes if ANY Qwen flavor flag is enabled)
-if [ "${DOWNLOAD_QWEN_2512_FP8:-}" = "true" ] || [ "${DOWNLOAD_QWEN_2512_GGUF_Q8:-}" = "true" ] || [ "${DOWNLOAD_QWEN_EDIT_2511_FP8:-}" = "true" ] || [ "${DOWNLOAD_QWEN_EDIT_2511_GGUF_Q8:-}" = "true" ]; then
+if [ "${DOWNLOAD_QWEN_2512_FP8:-}" = "true" ] || [ "${DOWNLOAD_QWEN_2512_GGUF_Q6_K:-}" = "true" ] || [ "${DOWNLOAD_QWEN_EDIT_2511_FP8:-}" = "true" ] || [ "${DOWNLOAD_QWEN_EDIT_2511_GGUF_Q6_K:-}" = "true" ]; then
     echo "📥 Downloading shared Qwen Image ecosystem sub-assets..."
 
     # Unified Vision-Language Multimodal Text Encoder (Qwen-2.5-VL 7B Backbone)
@@ -472,9 +472,9 @@ if [ "${DOWNLOAD_Z_IMAGE_BASE_FP8:-}" = "true" ]; then
     download_model "https://huggingface.co/drbaph/Z-Image-fp8/resolve/main/z-img_fp8-e4m3fn-scaled.safetensors" "$DIFFUSION_MODELS_DIR/z-img_fp8-e4m3fn-scaled.safetensors"
 fi
 
-if [ "${DOWNLOAD_Z_IMAGE_BASE_GGUF_Q8:-}" = "true" ]; then
-    echo "📥 Downloading Z-Image Base GGUF Q8..."
-    download_model "https://huggingface.co/unsloth/Z-Image-GGUF/resolve/main/z-image-Q8_0.gguf" "$GGUF_DIR/z-image-Q8_0.gguf"
+if [ "${DOWNLOAD_Z_IMAGE_BASE_GGUF_Q6_K:-}" = "true" ]; then
+    echo "📥 Downloading Z-Image Base GGUF Q6_K..."
+    download_model "https://huggingface.co/unsloth/Z-Image-GGUF/resolve/main/z-image-Q6_K.gguf" "$GGUF_DIR/z-image-Q6_K.gguf"
 fi
 
 if [ "${DOWNLOAD_Z_IMAGE_TURBO_FP8:-}" = "true" ]; then
@@ -482,12 +482,12 @@ if [ "${DOWNLOAD_Z_IMAGE_TURBO_FP8:-}" = "true" ]; then
     download_model "https://huggingface.co/Kijai/Z-Image_comfy_fp8_scaled/resolve/main/z-image-turbo_fp8_scaled_e4m3fn_KJ.safetensors" "$DIFFUSION_MODELS_DIR/z-image-turbo_fp8_scaled_e4m3fn_KJ.safetensors"
 fi
 
-if [ "${DOWNLOAD_Z_IMAGE_TURBO_GGUF_Q8:-}" = "true" ]; then
-    echo "📥 Downloading Z-Image Turbo GGUF Q8..."
-    download_model "https://huggingface.co/unsloth/Z-Image-Turbo-GGUF/resolve/main/z-image-turbo-Q8_0.gguf" "$GGUF_DIR/z-image-turbo-Q8_0.gguf"
+if [ "${DOWNLOAD_Z_IMAGE_TURBO_GGUF_Q6_K:-}" = "true" ]; then
+    echo "📥 Downloading Z-Image Turbo GGUF Q6_K..."
+    download_model "https://huggingface.co/unsloth/Z-Image-Turbo-GGUF/resolve/main/z-image-turbo-Q6_K.gguf" "$GGUF_DIR/z-image-turbo-Q6_K.gguf"
 fi
 
-if [ "${DOWNLOAD_Z_IMAGE_BASE_FP8:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_BASE_GGUF_Q8:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_TURBO_FP8:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_TURBO_GGUF_Q8:-}" = "true" ]; then
+if [ "${DOWNLOAD_Z_IMAGE_BASE_FP8:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_BASE_GGUF_Q6_K:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_TURBO_FP8:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_TURBO_GGUF_Q6_K:-}" = "true" ]; then
     echo "📥 Downloading shared Z-Image dependency ecosystem..."
 
     # Unified Multimodal Text Encoder (Qwen-3 4B Backbone)
@@ -509,13 +509,13 @@ if [ "${DOWNLOAD_CHROMA1_HD_FP8:-}" = "true" ]; then
     download_model "https://huggingface.co/silveroxides/Chroma1-HD-fp8-scaled/resolve/main/Chroma1-HD-fp8_scaled_defaultloader_hybrid_large_rev2.safetensors" "$DIFFUSION_MODELS_DIR/Chroma1-HD-fp8_scaled_defaultloader_hybrid_large_rev2.safetensors"
 fi
 
-if [ "${DOWNLOAD_CHROMA1_HD_GGUF_Q8:-}" = "true" ]; then
-    echo "📥 Downloading Chroma1 HD GGUF Q8..."
-    download_model "https://huggingface.co/silveroxides/Chroma1-HD-GGUF/resolve/main/Chroma1-HD-Q8_0.gguf" "$GGUF_DIR/Chroma1-HD-Q8_0.gguf"
+if [ "${DOWNLOAD_CHROMA1_HD_GGUF_Q6_K:-}" = "true" ]; then
+    echo "📥 Downloading Chroma1 HD GGUF Q6_K..."
+    download_model "https://huggingface.co/silveroxides/Chroma1-HD-GGUF/resolve/main/Chroma1-HD-Q6_K.gguf" "$GGUF_DIR/Chroma1-HD-Q6_K.gguf"
 fi
 
 # 2. Shared Sub-Assets (Executes if EITHER or BOTH flags are enabled)
-if [ "${DOWNLOAD_CHROMA1_HD_FP8:-}" = "true" ] || [ "${DOWNLOAD_CHROMA1_HD_GGUF_Q8:-}" = "true" ]; then
+if [ "${DOWNLOAD_CHROMA1_HD_FP8:-}" = "true" ] || [ "${DOWNLOAD_CHROMA1_HD_GGUF_Q6_K:-}" = "true" ]; then
     echo "📥 Downloading shared Chroma1 HD pipeline components..."
 
     # Foundational Flux Text Encoders (Both are required for DualCLIPLoader)

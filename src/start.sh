@@ -625,6 +625,7 @@ fi
 echo "📥 Downloading shared models..."
 download_model "https://objectstorage.us-phoenix-1.oraclecloud.com/n/ax6ygfvpvzka/b/open-modeldb-files/o/1x-ITF-SkinDiffDetail-Lite-v1.pth" "$UPSCALE_MODELS_DIR/1x-ITF-SkinDiffDetail-Lite-v1.pth"
 download_model "https://huggingface.co/Tenofas/ComfyUI/resolve/main/upscale_models/4xFaceUpDAT.pth" "$UPSCALE_MODELS_DIR/4xFaceUpDAT.pth"
+download_model "https://huggingface.co/spacepxl/Wan2.1-VAE-upscale2x/resolve/main/Wan2.1_VAE_upscale2x_imageonly_real_v1.safetensors" "$UPSCALE_MODELS_DIR/Wan2.1_VAE_upscale2x_imageonly_real_v1.safetensors"
 
 # ==========================================
 # SAM 2
@@ -817,24 +818,36 @@ echo "✅ Model whitelist successfully initialized!"
 # ============================================================
 # DYNAMIC CIVITAI DOWNLOAD ENGINE
 # ============================================================
-# Ensure the new UNET target path exists on the volume if GGUF downloads are requested
-if [ -n "$GGUF_IDS_TO_DOWNLOAD" ] && [ "$GGUF_IDS_TO_DOWNLOAD" != "replace_with_ids" ]; then
-    mkdir -p "$GGUF_DIR"
-fi
+# Ensure all potential download targets exist regardless of what the user requests
+mkdir -p "$CHECKPOINTS_DIR" "$LORAS_DIR" "$DIFFUSION_MODELS_DIR" "$GGUF_DIR"
 
 # Initialize a clean, empty associative array
 declare -A MODEL_CATEGORIES
-
 # Dynamically populate the map to guarantee absolute syntax safety on empty environment variables
 [ -n "$CHECKPOINT_IDS_TO_DOWNLOAD" ] && MODEL_CATEGORIES["$CHECKPOINTS_DIR"]="$CHECKPOINT_IDS_TO_DOWNLOAD"
 [ -n "$LORAS_IDS_TO_DOWNLOAD" ] && MODEL_CATEGORIES["$LORAS_DIR"]="$LORAS_IDS_TO_DOWNLOAD"
 [ -n "$BASE_MODEL_IDS_TO_DOWNLOAD" ] && MODEL_CATEGORIES["$DIFFUSION_MODELS_DIR"]="$BASE_MODEL_IDS_TO_DOWNLOAD"
 [ -n "$GGUF_IDS_TO_DOWNLOAD" ] && MODEL_CATEGORIES["$GGUF_DIR"]="$GGUF_IDS_TO_DOWNLOAD"
 
+# ============================================================
+# BAKED-IN MODELS (always downloaded regardless of user input)
+# Format: "versionId:fileId"
+# ============================================================
+BAKED_CHECKPOINTS=""
+BAKED_LORAS="2792925:2678982, 2474488:2362948, 2611939:2499325"
+BAKED_BASE_MODELS=""
+BAKED_GGUFS=""
+
+# Merge baked-in lists into the category map
+# If the category already has user-specified IDs, append with a comma separator
+[ -n "$BAKED_CHECKPOINTS" ] && MODEL_CATEGORIES["$CHECKPOINTS_DIR"]="${MODEL_CATEGORIES[$CHECKPOINTS_DIR]:+${MODEL_CATEGORIES[$CHECKPOINTS_DIR]},}$BAKED_CHECKPOINTS"
+[ -n "$BAKED_LORAS" ] && MODEL_CATEGORIES["$LORAS_DIR"]="${MODEL_CATEGORIES[$LORAS_DIR]:+${MODEL_CATEGORIES[$LORAS_DIR]},}$BAKED_LORAS"
+[ -n "$BAKED_BASE_MODELS" ] && MODEL_CATEGORIES["$DIFFUSION_MODELS_DIR"]="${MODEL_CATEGORIES[$DIFFUSION_MODELS_DIR]:+${MODEL_CATEGORIES[$DIFFUSION_MODELS_DIR]},}$BAKED_BASE_MODELS"
+[ -n "$BAKED_GGUFS" ] && MODEL_CATEGORIES["$GGUF_DIR"]="${MODEL_CATEGORIES[$GGUF_DIR]:+${MODEL_CATEGORIES[$GGUF_DIR]},}$BAKED_GGUFS"
+
 # ISOLATED TRACKING: Prevents clobbering any downloads initiated earlier in start.sh
 civitai_count=0
 civitai_pids=()
-
 # Schedule downloads in background
 for TARGET_DIR in "${!MODEL_CATEGORIES[@]}"; do
     MODEL_IDS_STRING="${MODEL_CATEGORIES[$TARGET_DIR]}"
@@ -842,28 +855,20 @@ for TARGET_DIR in "${!MODEL_CATEGORIES[@]}"; do
         echo "⏭️  Skipping downloads for $TARGET_DIR (Default placeholder detected)"
         continue
     fi
-
     IFS=',' read -ra MODEL_IDS <<< "$MODEL_IDS_STRING"
     for MODEL_ID in "${MODEL_IDS[@]}"; do
         CLEAN_ID="${MODEL_ID// /}"
         [ -z "$CLEAN_ID" ] && continue
-
         if [ -z "${CIVITAI_TOKEN:-}" ]; then
             echo "⏭️  Skipping CivitAI download ($CLEAN_ID): no token set" >> "$DOWNLOADS_LOG"
             continue
         fi
-
         echo "🚀 Scheduling CivitAI download: $CLEAN_ID to $TARGET_DIR" >> "$DOWNLOADS_LOG"
-
-        # Ensure the target directory exists before downloading into it
-        mkdir -p "$TARGET_DIR"
-
         $PYTHON_BIN "$NETWORK_VOLUME/download_with_aria.py" -m "$CLEAN_ID" -o "$TARGET_DIR" >> "$DOWNLOADS_LOG" 2>&1 &
         civitai_pids+=($!)
         ((civitai_count++))
     done
 done
-
 echo "📋 Scheduled $civitai_count CivitAI downloads in background."
 
 # ============================================================
@@ -991,10 +996,10 @@ LAUNCH_FLAGS="--listen --preview-method auto"
 #    status_msg "FP8 text encoder enabled"
 #fi
 
-#if [ "${USE_FP8_MODEL:-}" = "true" ]; then
-#    LAUNCH_FLAGS="$LAUNCH_FLAGS --fp8_e4m3fn-unet"
-#    status_msg "FP8 model weight casting enabled (E4M3FN)"
-#fi
+if [ "${USE_FP8_MODEL:-}" = "true" ]; then
+    LAUNCH_FLAGS="$LAUNCH_FLAGS --fp8_e4m3fn-unet"
+    status_msg "FP8 model weight casting enabled (E4M3FN)"
+fi
 
 # Memory Optimization based on VRAM
 if [ "$GPU_VRAM_MB" -ge "$VRAM_THRESHOLD" ]; then
@@ -1051,7 +1056,7 @@ VRAM_THRESHOLD=32000
 BASE_FLAGS="--listen --preview-method auto"
 
 # Seamlessly check variable states inside the live shell container
-#if [ "${USE_FP8_TEXT_ENC:-true}" = "true" ]; then
+#if [ "${USE_FP8_TEXT_ENC:-}" = "true" ]; then
 #    BASE_FLAGS="$BASE_FLAGS --fp8_e4m3fn-text-enc"
 #fi
 

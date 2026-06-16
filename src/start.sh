@@ -542,6 +542,9 @@ if [ "${DOWNLOAD_QWEN_2512_FP8:-}" = "true" ] || [ "${DOWNLOAD_QWEN_2512_GGUF_Q6
     download_model "https://huggingface.co/lightx2v/Qwen-Image-2512-Lightning/resolve/main/Qwen-Image-2512-Lightning-8steps-V1.0-bf16.safetensors" "$LORAS_DIR/Qwen-Image-2512-Lightning-8steps-V1.0-bf16.safetensors"
     download_model "https://huggingface.co/lightx2v/Qwen-Image-Edit-2511-Lightning/resolve/main/Qwen-Image-Edit-2511-Lightning-8steps-V1.0-bf16.safetensors" "$LORAS_DIR/Qwen-Image-Edit-2511-Lightning-8steps-V1.0-bf16.safetensors"
 
+    # Edit Unblur
+    download_model "https://huggingface.co/prithivMLmods/Qwen-Image-Edit-2511-Unblur-Upscale/resolve/main/Qwen-Image-Edit-Unblur-Upscale_20.safetensors" "$LORAS_DIR/Qwen-Image-Edit-Unblur-Upscale_20.safetensors"
+
     echo "📋 Qwen Image pipeline queued for background download"
 fi
 
@@ -834,7 +837,7 @@ declare -A MODEL_CATEGORIES
 # Format: "versionId:fileId"
 # ============================================================
 BAKED_CHECKPOINTS=""
-BAKED_LORAS="2792925:2678982, 2474488:2362948, 2611939:2499325"
+BAKED_LORAS=""
 BAKED_BASE_MODELS=""
 BAKED_GGUFS=""
 

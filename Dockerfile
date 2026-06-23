@@ -140,6 +140,13 @@ RUN --mount=type=cache,target=/root/.cache/pip \
         https://github.com/kijai/ComfyUI-segment-anything-2.git \
         https://github.com/chflame163/ComfyUI_LayerStyle.git \
         https://github.com/ltdrdata/ComfyUI-Impact-Subpack.git \
+        https://github.com/silveroxides/ComfyUI_SigmoidOffsetScheduler.git \
+        https://github.com/peterkickasspeter-civit/ComfyUI-ZImageTurboProgressiveLockedUpscale.git \
+        https://github.com/concreteshoes/ComfyUI-Technodes.git \
+        https://github.com/shiimizu/ComfyUI_smZNodes.git \
+        https://github.com/aistudynow/Z-Image-Turbo-Lora-Stack-V4.git \
+        https://github.com/erosDiffusion/ComfyUI-EulerDiscreteScheduler.git \
+        https://github.com/capitan01R/ComfyUI-CapitanZiT-Scheduler.git \
         https://github.com/Jonseed/ComfyUI-Detail-Daemon.git \
         https://github.com/chflame163/ComfyUI_LayerStyle_Advance.git \
         https://github.com/bash-j/mikey_nodes.git \

@@ -1,0 +1,732 @@
+{
+  "id": "6aa22b9a-045a-471b-866c-f5ce8df390f2",
+  "revision": 0,
+  "last_node_id": 152,
+  "last_link_id": 410,
+  "nodes": [
+    {
+      "id": 100,
+      "type": "VAELoader",
+      "pos": [
+        -218.77807981738374,
+        42.63209429892191
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            313
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        "z image\\ae.safetensors"
+      ]
+    },
+    {
+      "id": 29,
+      "type": "EmptyLatentImage",
+      "pos": [
+        -287.20133669783525,
+        740.2645857938584
+      ],
+      "size": [
+        310,
+        130
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            184
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.61"
+      },
+      "widgets_values": [
+        832,
+        1216,
+        1
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 110,
+      "type": "ModelSamplingAuraFlow",
+      "pos": [
+        -228.79747142843618,
+        182.5943793267009
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 334
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            335
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelSamplingAuraFlow",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.76"
+      },
+      "widgets_values": [
+        3
+      ]
+    },
+    {
+      "id": 63,
+      "type": "KSamplerAdvanced",
+      "pos": [
+        -243.27216680456905,
+        309.49872158408823
+      ],
+      "size": [
+        270,
+        334
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 335
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 285
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 332
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 184
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            197
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.61"
+      },
+      "widgets_values": [
+        "enable",
+        1051627900078545,
+        "randomize",
+        8,
+        1,
+        "euler",
+        "simple",
+        0,
+        9994,
+        "disable"
+      ]
+    },
+    {
+      "id": 99,
+      "type": "CLIPLoader",
+      "pos": [
+        -485.98618634820605,
+        20.357458600128407
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            312
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        "z image\\qweb_3_4b.safetensors",
+        "lumina2",
+        "default"
+      ]
+    },
+    {
+      "id": 98,
+      "type": "UNETLoader",
+      "pos": [
+        -916.6394201383445,
+        33.78131574305437
+      ],
+      "size": [
+        419.6627688413553,
+        82
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            311
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        "z image\\PornMaster z-image Turbo V0.2_fp8.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 90,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -889.6776883930802,
+        185.93900226513344
+      ],
+      "size": [
+        568.4045736507657,
+        648.8738038919435
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 309
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            285,
+            333
+          ]
+        }
+      ],
+      "title": "正面提示詞 (positive)",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.62"
+      },
+      "widgets_values": [
+        "A photograph of a nude Japanese with light skin and small breasts, young, straddling a man's pelvis. She is facing the camera with her mouth open, looking surprised or aroused. Her hair is styled in loose waves, and she wears a delicate necklace with a small pendant. The man's erect penis is visible, penetrating her vagina. She is positioned on top of him, with her legs spread apart. The background includes a white leather couch and a modern, brightly lit room with vertical blinds and colorful artwork on the walls. The lighting is bright and even, highlighting the woman's facial expression and the intimate act. The man's lower body is partially visible."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 109,
+      "type": "ConditioningZeroOut",
+      "pos": [
+        -852.1018865179892,
+        958.7684819526403
+      ],
+      "size": [
+        247.151953125,
+        26
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 333
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            332
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ConditioningZeroOut",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.73",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65,
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.4.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 84,
+      "type": "Lora Loader (LoraManager)",
+      "pos": [
+        73.97855169357632,
+        27.52140117770975
+      ],
+      "size": [
+        411.4241027832031,
+        563.52978515625
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 311
+        },
+        {
+          "name": "clip",
+          "shape": 7,
+          "type": "CLIP",
+          "link": 312
+        },
+        {
+          "name": "lora_stack",
+          "shape": 7,
+          "type": "LORA_STACK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            334
+          ]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            309
+          ]
+        },
+        {
+          "name": "trigger_words",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "loaded_loras",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Lora Loader (LoraManager)",
+        "cnr_id": "comfyui-lora-manager",
+        "ver": "392c157cb531805888d4d5054db58dd38ac721ee"
+      },
+      "widgets_values": [
+        "<lora:Mystic-XXX-ZIT-V4:0.30>",
+        [
+          {
+            "name": "Mystic-XXX-ZIT-V4",
+            "strength": "0.30",
+            "active": true,
+            "expanded": false,
+            "clipStrength": "0.30"
+          }
+        ]
+      ]
+    },
+    {
+      "id": 30,
+      "type": "VAEDecode",
+      "pos": [
+        -248.8626509117472,
+        936.950594500556
+      ],
+      "size": [
+        140,
+        50
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 197
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 313
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            408
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.61"
+      },
+      "widgets_values": [],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 106,
+      "type": "SaveImage",
+      "pos": [
+        75.73419862812611,
+        696.4911951429536
+      ],
+      "size": [
+        393.3962083069025,
+        647.731185513515
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 409
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        "comfyui_無面部修復"
+      ]
+    },
+    {
+      "id": 152,
+      "type": "PlaySound|pysssss",
+      "pos": [
+        -250.0920032004362,
+        1199.3593029565052
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "link": 410
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "shape": 6,
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PlaySound|pysssss"
+      },
+      "widgets_values": [
+        "always",
+        0.5,
+        "notify.mp3"
+      ]
+    },
+    {
+      "id": 151,
+      "type": "easy cleanGpuUsed",
+      "pos": [
+        -208.26588675891426,
+        1100.1347304020476
+      ],
+      "size": [
+        161.3404296875,
+        26
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 408
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            409,
+            410
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy cleanGpuUsed",
+        "cnr_id": "comfyui-easy-use",
+        "ver": "1.3.3"
+      },
+      "widgets_values": []
+    }
+  ],
+  "links": [
+    [
+      184,
+      29,
+      0,
+      63,
+      3,
+      "LATENT"
+    ],
+    [
+      197,
+      63,
+      0,
+      30,
+      0,
+      "LATENT"
+    ],
+    [
+      285,
+      90,
+      0,
+      63,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      309,
+      84,
+      1,
+      90,
+      0,
+      "CLIP"
+    ],
+    [
+      311,
+      98,
+      0,
+      84,
+      0,
+      "MODEL"
+    ],
+    [
+      312,
+      99,
+      0,
+      84,
+      1,
+      "CLIP"
+    ],
+    [
+      313,
+      100,
+      0,
+      30,
+      1,
+      "VAE"
+    ],
+    [
+      332,
+      109,
+      0,
+      63,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      333,
+      90,
+      0,
+      109,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      334,
+      84,
+      0,
+      110,
+      0,
+      "MODEL"
+    ],
+    [
+      335,
+      110,
+      0,
+      63,
+      0,
+      "MODEL"
+    ],
+    [
+      408,
+      30,
+      0,
+      151,
+      0,
+      "IMAGE"
+    ],
+    [
+      409,
+      151,
+      0,
+      106,
+      0,
+      "IMAGE"
+    ],
+    [
+      410,
+      151,
+      0,
+      152,
+      0,
+      "*"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 6,
+      "title": "基本文生圖檢查站和lora (T2I and lora)",
+      "bounding": [
+        -925.6566601001317,
+        -65.51558498011956,
+        1475.155026487028,
+        1460.273706724586
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.4802555145709469,
+      "offset": [
+        978.6142798281832,
+        474.6348264113694
+      ]
+    },
+    "frontendVersion": "1.35.9",
+    "workflowRendererVersion": "LG",
+    "groupNodes": {},
+    "controller_panel": {
+      "controllers": {},
+      "hidden": true,
+      "highlight": true,
+      "version": 2,
+      "default_order": []
+    },
+    "node_versions": {
+      "comfy-core": "0.3.14",
+      "comfyui-impact-subpack": "74db20c95eca152a6d686c914edc0ef4e4762cb8",
+      "comfyui-impact-pack": "1ae7cae2df8cca06027edfa3a24512671239d6c4"
+    },
+    "ue_links": [],
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}

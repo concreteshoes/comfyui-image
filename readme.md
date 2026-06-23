@@ -1,4 +1,4 @@
-# ComfyUI Qwen2512, Edit-2511, Z-Image Turbo/Base & Chroma1 HD w/ Flash & Sage Attn for CUDA 12.8
+# ComfyUI Qwen2512, Edit-2511, Z-Image Turbo/Base & Chroma1 HD, Flux 2 9B w/ Flash & Sage Attn for CUDA 12.8
 
 ## 🛡️ Environment Security & Updates
 
@@ -45,23 +45,31 @@ comfyui-restart --disable-smart-memory --lowvram
 
 ### Deploy
 - RunPod  - https://tinyurl.com/48k3ujza
-- Vast.ai - https://tinyurl.com/37wk77ja
+- Vast.ai - https://tinyurl.com/cf2j5mye
 
 ### Variables Selection
 
-Set the models you want to download to `true`. Text encoders are fp8.
+Set the models you want to download to `true`. Text encoders are fp8. VAE and lightning loras included.
 
 ```env
+DOWNLOAD_QWEN_2512_BF16=""
 DOWNLOAD_QWEN_2512_FP8=""
 DOWNLOAD_QWEN_2512_GGUF_Q6_K=""
+DOWNLOAD_QWEN_EDIT_2511_BF16=""
 DOWNLOAD_QWEN_EDIT_2511_FP8=""
 DOWNLOAD_QWEN_EDIT_2511_GGUF_Q6_K=""
+DOWNLOAD_Z_IMAGE_BASE_BF16=""
 DOWNLOAD_Z_IMAGE_BASE_FP8=""
 DOWNLOAD_Z_IMAGE_BASE_GGUF_Q6_K=""
+DOWNLOAD_Z_IMAGE_TURBO_BF16=""
 DOWNLOAD_Z_IMAGE_TURBO_FP8=""
 DOWNLOAD_Z_IMAGE_TURBO_GGUF_Q6_K=""
+DOWNLOAD_CHROMA1_HD_BF16=""
 DOWNLOAD_CHROMA1_HD_FP8=""
 DOWNLOAD_CHROMA1_HD_GGUF_Q6_K=""
+DOWNLOAD_FLUX2_9B_BF16=""
+DOWNLOAD_FLUX2_9B_FP8=""
+DOWNLOAD_FLUX2_9B_GGUF_Q6_K=""
 ```
 
 NSFW friendly captioners - JoyCaption Beta One & Florence nsfw v2:
@@ -77,9 +85,11 @@ Use username `admin` for Filebrowser.
 USER_PASSWORD=""
 ```
 
-The Civitai Downloader allows you to download specific models upon deployment by
-passing the following variables - to download multiple: "2124694:2018880, 9876543:1234567"
-The first number is the `modelId` and the second the `fileId` you get from the URL.
+The template comes with many Civitai workflows, but for actual checkpoints and loras, you need to specify
+the IDs for the Civitai Downloader. It allows you to download specific models on deployment by
+passing the following variables - `modelId` as first and `fileId` as second from the download URL link. 
+To download multiple: "2124694:2018880, 9876543:1234567"
+
 ```env
 CHECKPOINT_IDS_TO_DOWNLOAD=""
 LORAS_IDS_TO_DOWNLOAD=""
@@ -88,6 +98,8 @@ GGUF_IDS_TO_DOWNLOAD=""
 ```
 
 ### Auth Tokens
+Hugging Face token is mandatory for Flux 2, and Civitai token is required for all downloads
+from that site.
 
 ```env
 HUGGINGFACE_API_KEY=""
@@ -95,14 +107,6 @@ CIVITAI_TOKEN=""
 SSH_PUBLIC_KEY=""
 ```
 ##### Note: If you run into bugs, report them to me on discord: bytesizelife
-
-### ⚖️ License & Usage
-
-This project is licensed under AGPL-3.0. Additionally, commercial redistribution — 
-including paywalling access to this image or derivative works — is not permitted 
-without explicit written permission from the author.
-
-See [LICENSE](LICENSE) for full terms.
 
 ### Pre-installed custom nodes:
 
@@ -123,6 +127,13 @@ See [LICENSE](LICENSE) for full terms.
 - ComfyUI-segment-anything-2
 - ComfyUI_LayerStyle
 - ComfyUI-Impact-Subpack
+- ComfyUI_SigmoidOffsetScheduler
+- ComfyUI-ZImageTurboProgressiveLockedUpscale
+- ComfyUI-Technodes
+- ComfyUI_smZNodes
+- Z-Image-Turbo-Lora-Stack-V4
+- ComfyUI-EulerDiscreteScheduler
+- ComfyUI-CapitanZiT-Scheduler
 - ComfyUI-Detail-Daemon
 - ComfyUI_LayerStyle_Advance
 - mikey_nodes
@@ -144,6 +155,13 @@ See [LICENSE](LICENSE) for full terms.
 | 8888 | Jupyter     |
 | 22   | SSH         |
 
+### ⚖️ License & Usage
+
+This project is licensed under AGPL-3.0. Additionally, commercial redistribution — 
+including paywalling access to this image or derivative works — is not permitted 
+without explicit written permission from the author.
+
+See [LICENSE](LICENSE) for full terms.
 
 ### Accessing the Instance
 

@@ -1,0 +1,710 @@
+{
+  "id": "6aa22b9a-045a-471b-866c-f5ce8df390f2",
+  "revision": 0,
+  "last_node_id": 154,
+  "last_link_id": 414,
+  "nodes": [
+    {
+      "id": 30,
+      "type": "VAEDecode",
+      "pos": [
+        -248.8626509117472,
+        936.950594500556
+      ],
+      "size": [
+        140,
+        50
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 197
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 313
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            408
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.61"
+      },
+      "widgets_values": [],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 106,
+      "type": "SaveImage",
+      "pos": [
+        75.73419862812611,
+        696.4911951429536
+      ],
+      "size": [
+        393.3962083069025,
+        647.731185513515
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 409
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        "comfyui_無面部修復"
+      ]
+    },
+    {
+      "id": 152,
+      "type": "PlaySound|pysssss",
+      "pos": [
+        -250.0920032004362,
+        1199.3593029565052
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "link": 410
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "shape": 6,
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PlaySound|pysssss"
+      },
+      "widgets_values": [
+        "always",
+        0.5,
+        "notify.mp3"
+      ]
+    },
+    {
+      "id": 151,
+      "type": "easy cleanGpuUsed",
+      "pos": [
+        -208.26588675891426,
+        1100.1347304020476
+      ],
+      "size": [
+        161.3404296875,
+        26
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 408
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            409,
+            410
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy cleanGpuUsed",
+        "cnr_id": "comfyui-easy-use",
+        "ver": "1.3.3"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 100,
+      "type": "VAELoader",
+      "pos": [
+        -218.77807981738374,
+        42.63209429892191
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            313
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        "flux2\\flux2-vae.safetensors"
+      ]
+    },
+    {
+      "id": 63,
+      "type": "KSamplerAdvanced",
+      "pos": [
+        -243.27216680456905,
+        309.49872158408823
+      ],
+      "size": [
+        270,
+        334
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 411
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 285
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 413
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 184
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            197
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.61"
+      },
+      "widgets_values": [
+        "enable",
+        998929269424260,
+        "randomize",
+        4,
+        2,
+        "euler",
+        "simple",
+        0,
+        9999,
+        "disable"
+      ]
+    },
+    {
+      "id": 84,
+      "type": "Lora Loader (LoraManager)",
+      "pos": [
+        94.80080088510064,
+        48.34365036923406
+      ],
+      "size": [
+        411.4241027832031,
+        563.52978515625
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 311
+        },
+        {
+          "name": "clip",
+          "shape": 7,
+          "type": "CLIP",
+          "link": 312
+        },
+        {
+          "name": "lora_stack",
+          "shape": 7,
+          "type": "LORA_STACK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            411
+          ]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            309,
+            414
+          ]
+        },
+        {
+          "name": "trigger_words",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "loaded_loras",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Lora Loader (LoraManager)",
+        "cnr_id": "comfyui-lora-manager",
+        "ver": "392c157cb531805888d4d5054db58dd38ac721ee"
+      },
+      "widgets_values": [
+        "<lora:klein_9B_Turbo_r128:1.00>",
+        [
+          {
+            "name": "klein_9B_Turbo_r128",
+            "strength": 1,
+            "active": true,
+            "expanded": false,
+            "clipStrength": 1,
+            "locked": false
+          }
+        ]
+      ]
+    },
+    {
+      "id": 29,
+      "type": "EmptyLatentImage",
+      "pos": [
+        -287.20133669783525,
+        740.2645857938584
+      ],
+      "size": [
+        310,
+        130
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            184
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.61"
+      },
+      "widgets_values": [
+        832,
+        1216,
+        1
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 153,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -856.4571692971896,
+        938.5018293108253
+      ],
+      "size": [
+        449.2210291319293,
+        282.47092515928307
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 414
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            413
+          ]
+        }
+      ],
+      "title": "負面提示詞 (Negative Prompt)",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core",
+        "ver": "0.8.2",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65
+      },
+      "widgets_values": [
+        "Animation, semi-realism, wrong finger, wrong anatomy, wrong genitalia, body deformity, amputation, bad hands."
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 98,
+      "type": "UNETLoader",
+      "pos": [
+        -916.6394201383445,
+        33.78131574305437
+      ],
+      "size": [
+        419.6627688413553,
+        82
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            311
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        "flux2\\PornMaster_flux2_klein_9b_base_fp8_V1.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 154,
+      "type": "MarkdownNote",
+      "pos": [
+        -1658.7195620810667,
+        -12.46900056838704
+      ],
+      "size": [
+        610,
+        650
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Guide: [Subgraph](https://docs.comfy.org/interface/features/subgraph)\n\n## Model links (for local users)\n\n**diffusion_models**\n\n- [flux-2-klein-base-9b-fp8.safetensors](https://huggingface.co/black-forest-labs/FLUX.2-klein-base-9b-fp8)\n\n> Please visit BFL's repo, accept the agreement in the repo, and then download the fp8 model.\n\n**text_encoders**\n\n- [qwen_3_8b_fp8mixed.safetensors](https://huggingface.co/Comfy-Org/flux2-klein-9B/resolve/main/split_files/text_encoders/qwen_3_8b_fp8mixed.safetensors)\n\n**vae**\n\n- [flux2-vae.safetensors](https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/vae/flux2-vae.safetensors)\n\n\nModel Storage Location\n\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 text_encoders/\n│   │      └── qwen_3_8b_fp8mixed.safetensors\n│   └── 📂 vae/\n│          └── flux2-vae.safetensors\n```\n## Report issue\n\nNote: please update ComfyUI first ([guide](https://docs.comfy.org/zh-CN/installation/update_comfyui)) and prepare required models. Desktop/Cloud ship stable builds; nightly-supported models may not be included yet, please wait for the next stable release.\n\n- Cannot run / runtime errors: [ComfyUI/issues](https://github.com/comfyanonymous/ComfyUI/issues)\n- UI / frontend issues: [ComfyUI_frontend/issues](https://github.com/Comfy-Org/ComfyUI_frontend/issues)\n- Workflow issues: [workflow_templates/issues](https://github.com/Comfy-Org/workflow_templates/issues)\n"
+      ],
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 90,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -889.6776883930802,
+        185.93900226513344
+      ],
+      "size": [
+        568.4045736507657,
+        648.8738038919435
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 309
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            285
+          ]
+        }
+      ],
+      "title": "正面提示詞 (positive)",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.62"
+      },
+      "widgets_values": [
+        "來自攝影大師拍攝的獲獎照片最高傑作，美感和原創性，真實感,使用Canon EOS M6 Mark II 拍攝,f/8.\n高解析度，年輕亞洲女性，短黑微捲齊肩髮，劉海蓬鬆，精緻清冷五官，大眼微睫，紅唇淡妝，穿深灰緞面金色牡丹刺繡旗袍，盤扣紅邊，短袖開衩至大腿根，緊身勾勒纖腰豐臀，側坐在江南水鄉石橋欄杆上，右腿彎曲左腿垂下，左手撐石面，右手輕撩髮絲，眼神直視鏡頭，夕陽黃金時段側逆光，烏篷船河面波光，遠景古鎮白牆黛瓦遊人，淺景深特寫人物，高解析絲綢反光與肌膚質感，電影級暖金色調，復古民國風情，優雅性感張力，專業人像攝影細節。\n"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 99,
+      "type": "CLIPLoader",
+      "pos": [
+        -485.98618634820605,
+        20.357458600128407
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            312
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        "flux2\\qwen_3_8b_fp8mixed.safetensors",
+        "flux2",
+        "default"
+      ]
+    }
+  ],
+  "links": [
+    [
+      184,
+      29,
+      0,
+      63,
+      3,
+      "LATENT"
+    ],
+    [
+      197,
+      63,
+      0,
+      30,
+      0,
+      "LATENT"
+    ],
+    [
+      285,
+      90,
+      0,
+      63,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      309,
+      84,
+      1,
+      90,
+      0,
+      "CLIP"
+    ],
+    [
+      311,
+      98,
+      0,
+      84,
+      0,
+      "MODEL"
+    ],
+    [
+      312,
+      99,
+      0,
+      84,
+      1,
+      "CLIP"
+    ],
+    [
+      313,
+      100,
+      0,
+      30,
+      1,
+      "VAE"
+    ],
+    [
+      408,
+      30,
+      0,
+      151,
+      0,
+      "IMAGE"
+    ],
+    [
+      409,
+      151,
+      0,
+      106,
+      0,
+      "IMAGE"
+    ],
+    [
+      410,
+      151,
+      0,
+      152,
+      0,
+      "*"
+    ],
+    [
+      411,
+      84,
+      0,
+      63,
+      0,
+      "MODEL"
+    ],
+    [
+      413,
+      153,
+      0,
+      63,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      414,
+      84,
+      1,
+      153,
+      0,
+      "CLIP"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 6,
+      "title": "基本文生圖檢查站和lora (T2I and lora)",
+      "bounding": [
+        -925.6566601001317,
+        -65.51558498011956,
+        1475.155026487028,
+        1460.273706724586
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.6392200898939311,
+      "offset": [
+        1470.676774515375,
+        298.3920076530011
+      ]
+    },
+    "frontendVersion": "1.39.19",
+    "workflowRendererVersion": "LG",
+    "groupNodes": {},
+    "controller_panel": {
+      "controllers": {},
+      "hidden": true,
+      "highlight": true,
+      "version": 2,
+      "default_order": []
+    },
+    "node_versions": {
+      "comfy-core": "0.3.14",
+      "comfyui-impact-subpack": "74db20c95eca152a6d686c914edc0ef4e4762cb8",
+      "comfyui-impact-pack": "1ae7cae2df8cca06027edfa3a24512671239d6c4"
+    },
+    "ue_links": [],
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}

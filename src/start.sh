@@ -350,9 +350,12 @@ GGUF_DIR="$NETWORK_VOLUME/ComfyUI/models/unet"
 TEXT_ENCODERS_DIR="$NETWORK_VOLUME/ComfyUI/models/text_encoders"
 CLIP_VISION_DIR="$NETWORK_VOLUME/ComfyUI/models/clip_vision"
 VAE_DIR="$NETWORK_VOLUME/ComfyUI/models/vae"
+VAE_APPROX="$NETWORK_VOLUME/ComfyUI/models/vae_approx"
 UPSCALE_MODELS_DIR="$NETWORK_VOLUME/ComfyUI/models/upscale_models"
 INSIGHTFACE_DIR="$NETWORK_VOLUME/ComfyUI/models/insightface/models"
 SAM2_DIR="$NETWORK_VOLUME/ComfyUI/models/sam2"
+SAM_DIR="$NETWORK_VOLUME/ComfyUI/models/sams"
+PATCHES_DIR="$NETWORK_VOLUME/ComfyUI/models\model_patches"
 ANTELOPEV2_DIR="$INSIGHTFACE_DIR/antelopev2"
 PULID_DIR="$NETWORK_VOLUME/ComfyUI/models/pulid"
 ULTRALYTICS_DIR="$NETWORK_VOLUME/ComfyUI/models/ultralytics"
@@ -508,6 +511,11 @@ download_model() {
 # ============================================================
 
 # 1. Download Target Diffusion Weights Based on Selections
+if [ "${DOWNLOAD_QWEN_2512_BF16:-}" = "true" ]; then
+    echo "📥 Downloading Qwen Image 2512 BF16..."
+    download_model "https://huggingface.co/benjiaiplayground/Qwen-Image-2512-BF16/resolve/main/Qwen-Image-2512-BF16.safetensors" "$DIFFUSION_MODELS_DIR/Qwen-Image-2512-BF16.safetensors"
+fi
+
 if [ "${DOWNLOAD_QWEN_2512_FP8:-}" = "true" ]; then
     echo "📥 Downloading Qwen Image 2512 fp8_e4m3fn_scaled..."
     download_model "https://huggingface.co/lightx2v/Qwen-Image-2512-Lightning/resolve/main/qwen_image_2512_fp8_e4m3fn_scaled.safetensors" "$DIFFUSION_MODELS_DIR/qwen_image_2512_fp8_e4m3fn_scaled.safetensors"
@@ -516,6 +524,11 @@ fi
 if [ "${DOWNLOAD_QWEN_2512_GGUF_Q6_K:-}" = "true" ]; then
     echo "📥 Downloading Qwen Image 2512 GGUF Q6_K..."
     download_model "https://huggingface.co/unsloth/Qwen-Image-2512-GGUF/resolve/main/qwen-image-2512-Q6_K.gguf" "$GGUF_DIR/qwen-image-2512-Q6_K.gguf"
+fi
+
+if [ "${DOWNLOAD_QWEN_EDIT_2511_BF16:-}" = "true" ]; then
+    echo "📥 Downloading Qwen Image Edit 2511 BF16..."
+    download_model "https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_2511_bf16.safetensors" "$DIFFUSION_MODELS_DIR/qwen_image_edit_2511_bf16.safetensors"
 fi
 
 if [ "${DOWNLOAD_QWEN_EDIT_2511_FP8:-}" = "true" ]; then
@@ -529,7 +542,7 @@ if [ "${DOWNLOAD_QWEN_EDIT_2511_GGUF_Q6_K:-}" = "true" ]; then
 fi
 
 # 2. Shared Sub-Assets (Executes if ANY Qwen flavor flag is enabled)
-if [ "${DOWNLOAD_QWEN_2512_FP8:-}" = "true" ] || [ "${DOWNLOAD_QWEN_2512_GGUF_Q6_K:-}" = "true" ] || [ "${DOWNLOAD_QWEN_EDIT_2511_FP8:-}" = "true" ] || [ "${DOWNLOAD_QWEN_EDIT_2511_GGUF_Q6_K:-}" = "true" ]; then
+if [ "${DOWNLOAD_QWEN_2512_BF16:-}" = "true" ] || [ "${DOWNLOAD_QWEN_2512_FP8:-}" = "true" ] || [ "${DOWNLOAD_QWEN_2512_GGUF_Q6_K:-}" = "true" ] || [ "${DOWNLOAD_QWEN_EDIT_2511_BF16:-}" = "true" ] || [ "${DOWNLOAD_QWEN_EDIT_2511_FP8:-}" = "true" ] || [ "${DOWNLOAD_QWEN_EDIT_2511_GGUF_Q6_K:-}" = "true" ]; then
     echo "📥 Downloading shared Qwen Image ecosystem sub-assets..."
 
     # Unified Vision-Language Multimodal Text Encoder (Qwen-2.5-VL 7B Backbone)
@@ -552,6 +565,12 @@ fi
 # Z-IMAGE (BASE & TURBO)
 # ============================================================
 
+# 1. Download Target Diffusion Weights Based on Selections
+if [ "${DOWNLOAD_Z_IMAGE_BASE_BF16:-}" = "true" ]; then
+    echo "📥 Downloading Z-Image Base BF16..."
+    download_model "https://huggingface.co/Comfy-Org/z_image/resolve/main/split_files/diffusion_models/z_image_bf16.safetensors" "$DIFFUSION_MODELS_DIR/z_image_bf16.safetensors"
+fi
+
 if [ "${DOWNLOAD_Z_IMAGE_BASE_FP8:-}" = "true" ]; then
     echo "📥 Downloading Z-Image Base fp8-e4m3fn-scaled..."
     download_model "https://huggingface.co/drbaph/Z-Image-fp8/resolve/main/z-img_fp8-e4m3fn-scaled.safetensors" "$DIFFUSION_MODELS_DIR/z-img_fp8-e4m3fn-scaled.safetensors"
@@ -560,6 +579,11 @@ fi
 if [ "${DOWNLOAD_Z_IMAGE_BASE_GGUF_Q6_K:-}" = "true" ]; then
     echo "📥 Downloading Z-Image Base GGUF Q6_K..."
     download_model "https://huggingface.co/unsloth/Z-Image-GGUF/resolve/main/z-image-Q6_K.gguf" "$GGUF_DIR/z-image-Q6_K.gguf"
+fi
+
+if [ "${DOWNLOAD_Z_IMAGE_TURBO_BF16:-}" = "true" ]; then
+    echo "📥 Downloading Z-Image Turbo BF16..."
+    download_model "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/diffusion_models/z_image_turbo_bf16.safetensors" "$DIFFUSION_MODELS_DIR/z_image_turbo_bf16.safetensors"
 fi
 
 if [ "${DOWNLOAD_Z_IMAGE_TURBO_FP8:-}" = "true" ]; then
@@ -572,26 +596,50 @@ if [ "${DOWNLOAD_Z_IMAGE_TURBO_GGUF_Q6_K:-}" = "true" ]; then
     download_model "https://huggingface.co/unsloth/Z-Image-Turbo-GGUF/resolve/main/z-image-turbo-Q6_K.gguf" "$GGUF_DIR/z-image-turbo-Q6_K.gguf"
 fi
 
-if [ "${DOWNLOAD_Z_IMAGE_BASE_FP8:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_BASE_GGUF_Q6_K:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_TURBO_FP8:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_TURBO_GGUF_Q6_K:-}" = "true" ]; then
+# 2. Shared Sub-Assets (Executes if ANY Qwen flavor flag is enabled)
+if [ "${DOWNLOAD_Z_IMAGE_BASE_BF16:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_BASE_FP8:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_BASE_GGUF_Q6_K:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_TURBO_BF16:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_TURBO_FP8:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_TURBO_GGUF_Q6_K:-}" = "true" ]; then
     echo "📥 Downloading shared Z-Image dependency ecosystem..."
 
     # Unified Multimodal Text Encoder (Qwen-3 4B Backbone)
     download_model "https://huggingface.co/drbaph/Z-Image-fp8/resolve/main/qwen_3_4b_fp8_mixed.safetensors" "$TEXT_ENCODERS_DIR/qwen_3_4b_fp8_mixed.safetensors"
 
+    # Josiefied-Qwen3-4B
+    download_model "https://huggingface.co/mradermacher/Josiefied-Qwen3-4B-abliterated-v2-GGUF/resolve/main/Josiefied-Qwen3-4B-abliterated-v2.Q8_0.gguf" "$TEXT_ENCODERS_DIR/Josiefied-Qwen3-4B-abliterated-v2.Q8_0.gguf"
+
     # Target Architecture VAE
     download_model "https://huggingface.co/modelzpalace/ae.safetensors/resolve/main/ae.safetensors" "$VAE_DIR/z_image_ae.safetensors"
 
+    # Fun Lora
+    download_model "https://huggingface.co/alibaba-pai/Z-Image-Fun-Lora-Distill/resolve/main/Z-Image-Fun-Lora-Distill-4-Steps-2603-ComfyUI.safetensors" "$LORAS_DIR/Z-Image-Fun-Lora-Distill-4-Steps-2603-ComfyUI.safetensors"
+    download_model "https://huggingface.co/alibaba-pai/Z-Image-Fun-Lora-Distill/resolve/main/Z-Image-Fun-Lora-Distill-8-Steps-2603-ComfyUI.safetensors" "$LORAS_DIR/Z-Image-Fun-Lora-Distill-8-Steps-2603-ComfyUI.safetensors"
+
     echo "📋 Z-Image pipeline queued for background download"
+fi
+
+if [ "${DOWNLOAD_Z_IMAGE_TURBO_BF16:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_TURBO_FP8:-}" = "true" ] || [ "${DOWNLOAD_Z_IMAGE_TURBO_GGUF_Q6_K:-}" = "true" ]; then
+    echo "📥 Downloading shared Z-Image Turbo dependency ecosystem..."
+
+    # Turbo ControlNet
+    download_model "https://huggingface.co/alibaba-pai/Z-Image-Turbo-Fun-Controlnet-Union-2.1/resolve/main/Z-Image-Turbo-Fun-Controlnet-Union-2.1-2602-8steps.safetensors" "$PATCHES_DIR/Z-Image-Turbo-Fun-Controlnet-Union-2.1-2602-8steps.safetensors"
+
+    # UltraFlux-v1 VAE
+    download_model "https://huggingface.co/Owen777/UltraFlux-v1/resolve/main/vae/diffusion_pytorch_model.safetensors" "$VAE_DIR/UltraFlux-v1.safetensors"
+
 fi
 
 # ============================================================
 # CHROMA1 HD
 # ============================================================
 
-# 1. Download Base Diffusion Models Based on Flavor Selection
+# 1. Download Base Diffusion Models
+if [ "${DOWNLOAD_CHROMA1_HD_BF16:-}" = "true" ]; then
+    echo "📥 Downloading Chroma1 DC-2K HD BF16..."
+    download_model "https://huggingface.co/silveroxides/Chroma-Misc-Models/resolve/main/Chroma-DC-2K/Chroma-DC-2K.safetensors" "$DIFFUSION_MODELS_DIR/Chroma-DC-2K.safetensors"
+fi
+
 if [ "${DOWNLOAD_CHROMA1_HD_FP8:-}" = "true" ]; then
-    echo "📥 Downloading Chroma1 HD fp8_scaled..."
-    download_model "https://huggingface.co/silveroxides/Chroma1-HD-fp8-scaled/resolve/main/Chroma1-HD-fp8_scaled_defaultloader_hybrid_large_rev2.safetensors" "$DIFFUSION_MODELS_DIR/Chroma1-HD-fp8_scaled_defaultloader_hybrid_large_rev2.safetensors"
+    echo "📥 Downloading Chroma1 DC-2K HD fp8_scaled..."
+    download_model "https://huggingface.co/silveroxides/Chroma-Misc-Models/resolve/main/Chroma-DC-2K/Chroma-DC-2K-fp8_scaled_original_hybrid_large_rev2.safetensors" "$DIFFUSION_MODELS_DIR/Chroma-DC-2K-fp8_scaled_original_hybrid_large_rev2.safetensors"
 fi
 
 if [ "${DOWNLOAD_CHROMA1_HD_GGUF_Q6_K:-}" = "true" ]; then
@@ -600,7 +648,7 @@ if [ "${DOWNLOAD_CHROMA1_HD_GGUF_Q6_K:-}" = "true" ]; then
 fi
 
 # 2. Shared Sub-Assets (Executes if EITHER or BOTH flags are enabled)
-if [ "${DOWNLOAD_CHROMA1_HD_FP8:-}" = "true" ] || [ "${DOWNLOAD_CHROMA1_HD_GGUF_Q6_K:-}" = "true" ]; then
+if [ "${DOWNLOAD_CHROMA1_HD_BF16:-}" = "true" ] || [ "${DOWNLOAD_CHROMA1_HD_FP8:-}" = "true" ] || [ "${DOWNLOAD_CHROMA1_HD_GGUF_Q6_K:-}" = "true" ]; then
     echo "📥 Downloading shared Chroma1 HD pipeline components..."
 
     # Foundational Flux Text Encoders (Both are required for DualCLIPLoader)
@@ -618,7 +666,39 @@ if [ "${DOWNLOAD_CHROMA1_HD_FP8:-}" = "true" ] || [ "${DOWNLOAD_CHROMA1_HD_GGUF_
     download_model "https://huggingface.co/Shakker-Labs/FLUX.1-dev-ControlNet-Union-Pro-2.0/resolve/main/diffusion_pytorch_model.safetensors" "$CONTROLNET_DIR/flux_union_controlnet_2.0.safetensors"
     download_model "https://huggingface.co/XLabs-AI/flux-controlnet-depth-v3/resolve/main/flux-depth-controlnet-v3.safetensors" "$CONTROLNET_DIR/flux-depth-controlnet-v3.safetensors"
 
+    # Flash heun 8 steps LoRA
+    download_model "https://huggingface.co/silveroxides/Chroma-LoRAs/resolve/main/flash-heun/chroma-unlocked-v47-flash-heun-8steps-cfg1_r96-fp32.safetensors" "$LORAS_DIR/chroma-unlocked-v47-flash-heun-8steps-cfg1_r96-fp32.safetensors"
+
+    # taef1_decoder.pth
+    download_model "https://huggingface.co/martintomov/taef1/resolve/main/taef1_decoder.pth" "$VAE_APPROX/taef1_decoder.pth"
+
     echo "📋 Chroma1 HD pipeline queued for background download"
+fi
+
+# ============================================================
+# FLUX 2 9B
+# ============================================================
+
+# Download Base Diffusion Models
+if [ "${DOWNLOAD_FLUX2_9B_BF16:-}" = "true" ]; then
+    echo "📥 Downloading Flux 2 9B BF16..."
+    download_model "https://huggingface.co/black-forest-labs/FLUX.2-klein-base-9B/resolve/main/flux-2-klein-base-9b.safetensors" "$DIFFUSION_MODELS_DIR/flux-2-klein-base-9b.safetensors"
+fi
+
+if [ "${DOWNLOAD_FLUX2_9B_GGUF_Q6_K:-}" = "true" ]; then
+    echo "📥 Downloading Flux 2 9B GGUF Q6_K..."
+    download_model "https://huggingface.co/unsloth/FLUX.2-klein-9B-GGUF/resolve/main/flux-2-klein-9b-Q6_K.gguf" "$GGUF_DIR/flux-2-klein-9b-Q6_K.gguf"
+fi
+
+# Shared Sub-Assets (Executes if EITHER or BOTH flags are enabled)
+if [ "${DOWNLOAD_FLUX2_9B_BF16:-}" = "true" ] || [ "${DOWNLOAD_FLUX2_9B_FP8:-}" = "true" ] || [ "${DOWNLOAD_FLUX2_9B_GGUF_Q6_K:-}" = "true" ]; then
+    echo "📥 Downloading shared Flux 2 9B pipeline components..."
+
+    # Text Encoder
+    download_model "https://huggingface.co/Comfy-Org/flux2-klein-9B/resolve/main/split_files/text_encoders/qwen_3_8b_fp8mixed.safetensors" "$TEXT_ENCODERS_DIR/qwen_3_8b_fp8mixed.safetensors"
+
+    # VAE
+    download_model "https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/vae/flux2-vae.safetensors" "$VAE_DIR/flux2-vae.safetensors"
 fi
 
 # ==========================================
@@ -629,14 +709,18 @@ echo "📥 Downloading shared models..."
 download_model "https://objectstorage.us-phoenix-1.oraclecloud.com/n/ax6ygfvpvzka/b/open-modeldb-files/o/1x-ITF-SkinDiffDetail-Lite-v1.pth" "$UPSCALE_MODELS_DIR/1x-ITF-SkinDiffDetail-Lite-v1.pth"
 download_model "https://huggingface.co/Tenofas/ComfyUI/resolve/main/upscale_models/4xFaceUpDAT.pth" "$UPSCALE_MODELS_DIR/4xFaceUpDAT.pth"
 download_model "https://huggingface.co/spacepxl/Wan2.1-VAE-upscale2x/resolve/main/Wan2.1_VAE_upscale2x_imageonly_real_v1.safetensors" "$UPSCALE_MODELS_DIR/Wan2.1_VAE_upscale2x_imageonly_real_v1.safetensors"
+download_model "https://github.com/starinspace/StarinspaceUpscale/releases/download/Models/4xPurePhoto-RealPLSKR.pth" "$UPSCALE_MODELS_DIR/4xPurePhoto-RealPLSKR.pth"
+download_model "https://huggingface.co/lokCX/4x-Ultrasharp/resolve/main/4x-UltraSharp.pth" "$UPSCALE_MODELS_DIR/4x-UltraSharp.pth"
+download_model "https://huggingface.co/kadirnar/DF2K/resolve/main/DF2K.pth" "$UPSCALE_MODELS_DIR/DF2K.pth"
 
 # ==========================================
-# SAM 2
+# SAM
 # ==========================================
 
 echo "📥 Downloading SAM 2 weights..."
 download_model "https://huggingface.co/Kijai/sam2-safetensors/resolve/main/sam2.1_hiera_large-fp16.safetensors" "$SAM2_DIR/sam2.1_hiera_large-fp16.safetensors"
 download_model "https://huggingface.co/Kijai/sam2-safetensors/resolve/main/sam2.1_hiera_small-fp16.safetensors" "$SAM2_DIR/sam2.1_hiera_small-fp16.safetensors"
+download_model "https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/sams/sam_vit_b_01ec64.pth" "$SAM_DIR/sam_vit_b_01ec64.pth"
 
 # ==========================================
 # IMPACT PACK
@@ -645,6 +729,7 @@ download_model "https://huggingface.co/Kijai/sam2-safetensors/resolve/main/sam2.
 echo "📥 Downloading detailers & post-processing utilities..."
 download_model "https://huggingface.co/FacehugmanIII/4x_foolhardy_Remacri/resolve/main/4x_foolhardy_Remacri.pth" "$UPSCALE_MODELS_DIR/4x_foolhardy_Remacri.pth"
 download_model "https://huggingface.co/Bingsu/adetailer/resolve/main/face_yolov11l.pt" "$ULTRALYTICS_DIR/bbox/face_yolov11l.pt"
+download_model "https://huggingface.co/Bingsu/adetailer/resolve/main/face_yolov9c.pt" "$ULTRALYTICS_DIR/bbox/face_yolov9c.pt"
 download_model "https://huggingface.co/Ultralytics/assets/resolve/main/yolo11l-seg.pt" "$ULTRALYTICS_DIR/segm/yolo11l-seg.pt"
 
 # ==========================================
@@ -813,6 +898,7 @@ cat > "$MODEL_WHITELIST_DIR" << 'EOF'
 EVA02_CLIP_L_336_psz14_s6B.pt
 Eyes.pt
 face_yolov11l.pt
+face_yolov9c.pt
 yolo11l-seg.pt
 EOF
 
@@ -836,8 +922,8 @@ declare -A MODEL_CATEGORIES
 # BAKED-IN MODELS (always downloaded regardless of user input)
 # Format: "versionId:fileId"
 # ============================================================
-BAKED_CHECKPOINTS=""
-BAKED_LORAS=""
+BAKED_CHECKPOINTS="2951793:2831566"
+BAKED_LORAS="2709343:2595263"
 BAKED_BASE_MODELS=""
 BAKED_GGUFS=""
 
@@ -1012,8 +1098,30 @@ else
     echo "⚖️ Standard VRAM detected. Letting ComfyUI handle dynamic offloading."
 fi
 
-# Add SageAttention
-if [ "$SAGE_ATTENTION_AVAILABLE" = "true" ]; then
+# ============================================================
+# Attention Backend Selection
+# ============================================================
+# Z-Image models produce black images with Sage Attention.
+# If any Z-Image variant is requested, force Flash Attention instead.
+
+Z_IMAGE_REQUESTED=false
+if [ -n "$DOWNLOAD_Z_IMAGE_BASE_BF16" ] \
+    || [ -n "$DOWNLOAD_Z_IMAGE_BASE_FP8" ] \
+    || [ -n "$DOWNLOAD_Z_IMAGE_BASE_GGUF_Q6_K" ] \
+    || [ -n "$DOWNLOAD_Z_IMAGE_TURBO_BF16" ] \
+    || [ -n "$DOWNLOAD_Z_IMAGE_TURBO_FP8" ] \
+    || [ -n "$DOWNLOAD_Z_IMAGE_TURBO_GGUF_Q6_K" ]; then
+    Z_IMAGE_REQUESTED=true
+fi
+
+if [ "$Z_IMAGE_REQUESTED" = "true" ]; then
+    if python -c "import flash_attn" &> /dev/null; then
+        status_msg "Z-Image model detected — using Flash Attention (incompatible with Sage Attention)."
+        LAUNCH_FLAGS="$LAUNCH_FLAGS --use-flash-attention"
+    else
+        status_msg "Z-Image model detected but Flash Attention unavailable — no attention flag set."
+    fi
+elif [ "$SAGE_ATTENTION_AVAILABLE" = "true" ]; then
     LAUNCH_FLAGS="$LAUNCH_FLAGS --use-sage-attention"
 fi
 
@@ -1071,12 +1179,31 @@ if [ "$GPU_VRAM_MB" -ge "$VRAM_THRESHOLD" ]; then
     BASE_FLAGS="$BASE_FLAGS --highvram"
 fi
 
-# Live Python execution test to see if SageAttention compiles/loads cleanly right now
-if /usr/bin/python3 -c "import sageattention" &> /dev/null; then
-    echo "⚡ SageAttention import verification: SUCCESS. Appending launch flag."
+# ============================================================
+# Attention Backend Selection
+# ============================================================
+# Z-Image models produce black images with Sage Attention.
+# If any Z-Image variant is requested, force Flash Attention instead.
+
+Z_IMAGE_REQUESTED=false
+if [ -n "$DOWNLOAD_Z_IMAGE_BASE_BF16" ] || \
+   [ -n "$DOWNLOAD_Z_IMAGE_BASE_FP8" ] || \
+   [ -n "$DOWNLOAD_Z_IMAGE_BASE_GGUF_Q6_K" ] || \
+   [ -n "$DOWNLOAD_Z_IMAGE_TURBO_BF16" ] || \
+   [ -n "$DOWNLOAD_Z_IMAGE_TURBO_FP8" ] || \
+   [ -n "$DOWNLOAD_Z_IMAGE_TURBO_GGUF_Q6_K" ]; then
+    Z_IMAGE_REQUESTED=true
+fi
+
+if [ "$Z_IMAGE_REQUESTED" = "true" ]; then
+    if python -c "import flash_attn" &> /dev/null; then
+        status_msg "Z-Image model detected — using Flash Attention (incompatible with Sage Attention)."
+        BASE_FLAGS="$BASE_FLAGS --use-flash-attention"
+    else
+        status_msg "Z-Image model detected but Flash Attention unavailable — no attention flag set."
+    fi
+elif [ "$SAGE_ATTENTION_AVAILABLE" = "true" ]; then
     BASE_FLAGS="$BASE_FLAGS --use-sage-attention"
-else
-    echo "⚠️ SageAttention import verification: FAILED or missing. Omitting flag."
 fi
 
 echo "📋 Active debugger flags: $BASE_FLAGS"

@@ -1,0 +1,1734 @@
+{
+  "id": "b2d37916-fab5-425f-850d-7a64886e4d54",
+  "revision": 0,
+  "last_node_id": 795,
+  "last_link_id": 1420,
+  "nodes": [
+    {
+      "id": 298,
+      "type": "VAEDecode",
+      "pos": [
+        -771.8842084170874,
+        177.72660730073198
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 1376
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 1252
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1394
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
+        "Node name for S&R": "VAEDecode",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 766,
+      "type": "Note",
+      "pos": [
+        -2243.582692413965,
+        1093.2791305608812
+      ],
+      "size": [
+        280.88496231418253,
+        88
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Connect \"Text\" to the text box in positive prompt if you would like to use dynamic prompts. :)"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 751,
+      "type": "ClownsharKSampler_Beta",
+      "pos": [
+        -1803.8159297717334,
+        564.8397068760038
+      ],
+      "size": [
+        270,
+        635
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "shape": 7,
+          "type": "MODEL",
+          "link": 1398
+        },
+        {
+          "name": "positive",
+          "shape": 7,
+          "type": "CONDITIONING",
+          "link": 1372
+        },
+        {
+          "name": "negative",
+          "shape": 7,
+          "type": "CONDITIONING",
+          "link": 1373
+        },
+        {
+          "name": "latent_image",
+          "shape": 7,
+          "type": "LATENT",
+          "link": 1375
+        },
+        {
+          "name": "sigmas",
+          "shape": 7,
+          "type": "SIGMAS",
+          "link": null
+        },
+        {
+          "name": "guides",
+          "shape": 7,
+          "type": "GUIDES",
+          "link": null
+        },
+        {
+          "name": "options",
+          "shape": 7,
+          "type": "OPTIONS",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "LATENT",
+          "links": [
+            1376
+          ]
+        },
+        {
+          "name": "denoised",
+          "type": "LATENT",
+          "links": null
+        },
+        {
+          "name": "options",
+          "type": "OPTIONS",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "RES4LYF",
+        "ver": "0dc91c00c4c3fb38e7874fcd7a2a327765e8882c",
+        "Node name for S&R": "ClownsharKSampler_Beta"
+      },
+      "widgets_values": [
+        0.65,
+        "multistep/res_2m",
+        "bong_tangent",
+        37,
+        -1,
+        1,
+        3.5,
+        198071145759818,
+        "randomize",
+        "standard",
+        true
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 756,
+      "type": "FluxResolutionNode",
+      "pos": [
+        -1094.9981978770252,
+        -4.340381608798163
+      ],
+      "size": [
+        248.083895431381,
+        241.84213452450868
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            1382
+          ]
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [
+            1381
+          ]
+        },
+        {
+          "name": "resolution",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "preview",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "controlaltai-nodes",
+        "ver": "1.1.4",
+        "Node name for S&R": "FluxResolutionNode"
+      },
+      "widgets_values": [
+        "1.0",
+        "5:7 (Balanced Portrait)",
+        "64",
+        false,
+        "1:1"
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 737,
+      "type": "EmptySD3LatentImage",
+      "pos": [
+        -830.7109973800721,
+        -1.1633065583932645
+      ],
+      "size": [
+        210,
+        137.54400595587663
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 1382
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 1381
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            1375
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.59",
+        "Node name for S&R": "EmptySD3LatentImage",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65
+      },
+      "widgets_values": [
+        832,
+        1216,
+        2
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 753,
+      "type": "SeedVR2LoadDiTModel",
+      "pos": [
+        -572.0583224012086,
+        -7.16041017034976
+      ],
+      "size": [
+        257.5630859375,
+        202
+      ],
+      "flags": {
+        "collapsed": false,
+        "pinned": true
+      },
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "torch_compile_args",
+          "shape": 7,
+          "type": "TORCH_COMPILE_ARGS",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "SEEDVR2_DIT",
+          "type": "SEEDVR2_DIT",
+          "links": [
+            1379
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "seedvr2_videoupscaler",
+        "ver": "2.5.24",
+        "Node name for S&R": "SeedVR2LoadDiTModel"
+      },
+      "widgets_values": [
+        "seedvr2_ema_7b_fp16.safetensors",
+        "cuda:0",
+        36,
+        false,
+        "cpu",
+        false,
+        "sdpa"
+      ]
+    },
+    {
+      "id": 754,
+      "type": "SeedVR2LoadVAEModel",
+      "pos": [
+        -298.76759010577496,
+        -7.461095282892703
+      ],
+      "size": [
+        261.808203125,
+        298
+      ],
+      "flags": {
+        "collapsed": false,
+        "pinned": true
+      },
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "torch_compile_args",
+          "shape": 7,
+          "type": "TORCH_COMPILE_ARGS",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "SEEDVR2_VAE",
+          "type": "SEEDVR2_VAE",
+          "links": [
+            1380
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "seedvr2_videoupscaler",
+        "ver": "2.5.24",
+        "Node name for S&R": "SeedVR2LoadVAEModel"
+      },
+      "widgets_values": [
+        "ema_vae_fp16.safetensors",
+        "cuda:0",
+        true,
+        1024,
+        128,
+        true,
+        1024,
+        128,
+        "false",
+        "none",
+        false
+      ]
+    },
+    {
+      "id": 752,
+      "type": "SeedVR2VideoUpscaler",
+      "pos": [
+        -21.07513764030686,
+        -7.712438136576186
+      ],
+      "size": [
+        269.956640625,
+        386
+      ],
+      "flags": {
+        "collapsed": false,
+        "pinned": true
+      },
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1416
+        },
+        {
+          "name": "dit",
+          "type": "SEEDVR2_DIT",
+          "link": 1379
+        },
+        {
+          "name": "vae",
+          "type": "SEEDVR2_VAE",
+          "link": 1380
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1417
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "seedvr2_videoupscaler",
+        "ver": "2.5.24",
+        "Node name for S&R": "SeedVR2VideoUpscaler"
+      },
+      "widgets_values": [
+        194710185,
+        "randomize",
+        2048,
+        4090,
+        1,
+        false,
+        "lab",
+        0,
+        0,
+        0,
+        0,
+        "cpu",
+        false
+      ]
+    },
+    {
+      "id": 742,
+      "type": "Note",
+      "pos": [
+        -1383.922716956336,
+        335.49204931937436
+      ],
+      "size": [
+        230,
+        88
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Optional Padding",
+      "properties": {},
+      "widgets_values": [
+        "min_padding 1 is the official way. setting it to 0 works too. "
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 741,
+      "type": "T5TokenizerOptions",
+      "pos": [
+        -1385.1783219805632,
+        214.0956822538769
+      ],
+      "size": [
+        210,
+        82
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 1342
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            1356,
+            1359
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.59",
+        "Node name for S&R": "T5TokenizerOptions",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65
+      },
+      "widgets_values": [
+        0,
+        0
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 739,
+      "type": "Note",
+      "pos": [
+        -1389.4249141120772,
+        -17.763747530741647
+      ],
+      "size": [
+        260,
+        90
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Optional Flow Shift",
+      "properties": {},
+      "widgets_values": [
+        "Flow Shift node set to 1.0 represents intended shift by the creator of the Chroma model and will produce greater detail. "
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 701,
+      "type": "ModelSamplingAuraFlow",
+      "pos": [
+        -1385.5102748020336,
+        108.79731622923494
+      ],
+      "size": [
+        210,
+        66.66666666666667
+      ],
+      "flags": {
+        "collapsed": false,
+        "pinned": true
+      },
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1405
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1398
+          ]
+        }
+      ],
+      "title": "Flow Shift",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.52",
+        "Node name for S&R": "ModelSamplingAuraFlow",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65
+      },
+      "widgets_values": [
+        1
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 743,
+      "type": "MarkdownNote",
+      "pos": [
+        -2717.531056440797,
+        35.92214731202066
+      ],
+      "size": [
+        490.6422706852395,
+        420.1829698607047
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Pushing unCanny Chroma toward believable amateur realism — candid, imperfect, and strikingly lifelike photos that feel like real snapshots. Although, it is very versatile. :) \n\nHere’s some links you’ll need; If you have used models related to Flux, then you probably don't need to download them again.\n\n## diffusion_models\n\n[UnCanny Photorealistic Chroma Finetune](https://civitai.com/models/2086389?modelVersionId=2517681)\n\n\n## text_encoders\n\n[t5xxl_fp8_e4m3fn_scaled.safetensors](https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn_scaled.safetensors)\n\n## vae\n\n[ae.safetensors](https://huggingface.co/Comfy-Org/Lumina_Image_2.0_Repackaged/resolve/main/split_files/vae/ae.safetensors)\n\n\n```\n📂 ComfyUI/\n├─ 📂 models/\n│   ├─ 📂 diffusion_models/\n│   │     ├── uncannyPhotorealism_v13.safetensors\n│   ├─ 📂 text_encoders/\n│   │     ├── t5xxl_fp8_e4m3fn_scaled.safetensors\n│   └─ 📂 vae/\n│            └──  ae.safetensors\n```\n"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 780,
+      "type": "Fast Bypasser (rgthree)",
+      "pos": [
+        -1737.5491807377775,
+        13.561480579589869
+      ],
+      "size": [
+        315.474609375,
+        78
+      ],
+      "flags": {
+        "collapsed": false,
+        "pinned": true
+      },
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "dir": 3,
+          "name": "Power Lora Loader (rgthree)",
+          "type": "*",
+          "link": 1408
+        },
+        {
+          "dir": 3,
+          "name": "",
+          "type": "*",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "dir": 4,
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": []
+        }
+      ],
+      "title": "Enable Loras?",
+      "properties": {
+        "toggleRestriction": "default"
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 781,
+      "type": "Power Lora Loader (rgthree)",
+      "pos": [
+        -1732.3000319612306,
+        143.40363830018518
+      ],
+      "size": [
+        305.0751287961606,
+        298.05954884050584
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "dir": 3,
+          "name": "model",
+          "type": "MODEL",
+          "link": 1404
+        },
+        {
+          "dir": 3,
+          "name": "clip",
+          "type": "CLIP",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "dir": 4,
+          "name": "MODEL",
+          "shape": 3,
+          "type": "MODEL",
+          "links": [
+            1405,
+            1408
+          ]
+        },
+        {
+          "dir": 4,
+          "name": "CLIP",
+          "shape": 3,
+          "type": "CLIP",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "1.0.2512112053",
+        "Show Strengths": "Single Strength"
+      },
+      "widgets_values": [
+        {},
+        {
+          "type": "PowerLoraLoaderHeaderWidget"
+        },
+        {},
+        ""
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 731,
+      "type": "UNETLoader",
+      "pos": [
+        -2168.0554066731397,
+        45.58227523335405
+      ],
+      "size": [
+        370,
+        96.66666666666667
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1404
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.57",
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "Chroma1-HD-fp8mixed.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Chroma1-HD_repackaged/resolve/main/split_files/diffusion_models/Chroma1-HD-fp8mixed.safetensors",
+            "directory": "diffusion_models"
+          }
+        ],
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65
+      },
+      "widgets_values": [
+        "uncannyPhotorealism_v13.safetensors",
+        "default"
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 733,
+      "type": "CLIPLoader",
+      "pos": [
+        -2167.281737429985,
+        178.74583146904146
+      ],
+      "size": [
+        370,
+        123.33333333333334
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            1342
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.57",
+        "Node name for S&R": "CLIPLoader",
+        "models": [
+          {
+            "name": "t5xxl_fp8_e4m3fn_scaled.safetensors",
+            "url": "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn_scaled.safetensors",
+            "directory": "text_encoders"
+          }
+        ],
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65
+      },
+      "widgets_values": [
+        "t5xxl_fp8_e4m3fn_scaled.safetensors",
+        "chroma",
+        "default"
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 710,
+      "type": "VAELoader",
+      "pos": [
+        -2166.765756366321,
+        339.4746262438561
+      ],
+      "size": [
+        370,
+        68.33333333333334
+      ],
+      "flags": {
+        "collapsed": false,
+        "pinned": true
+      },
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            1252
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
+        "Node name for S&R": "VAELoader",
+        "models": [
+          {
+            "name": "ae.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Lumina_Image_2.0_Repackaged/resolve/main/split_files/vae/ae.safetensors",
+            "directory": "vae"
+          }
+        ],
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65
+      },
+      "widgets_values": [
+        "ae.safetensors"
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 783,
+      "type": "SaveImageWithMetaData",
+      "pos": [
+        -1036.1444860580746,
+        503.9921597532561
+      ],
+      "size": [
+        1271.606091186019,
+        1293.4926255125315
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 1418
+        },
+        {
+          "name": "extra_metadata",
+          "shape": 7,
+          "type": "EXTRA_METADATA",
+          "link": null
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfyui_image_metadata_extension",
+        "ver": "1.3.4",
+        "Node name for S&R": "SaveImageWithMetaData"
+      },
+      "widgets_values": [
+        "Upscaled",
+        "",
+        "png",
+        "max",
+        "full",
+        true,
+        true
+      ],
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 765,
+      "type": "MarkdownNote",
+      "pos": [
+        -1026.1634742162519,
+        277.7692422684548
+      ],
+      "size": [
+        407.55198356595315,
+        112.23859137344232
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Added an image filter solely to be able to only process images you want to KEEP. \n\nWhen it pops up, just select the images you want to keep and hit send. SO EASY! :)\n\nFor *SINGLE IMAGES*, just change batch_size to 1."
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 764,
+      "type": "Image Filter",
+      "pos": [
+        -771.8160529658066,
+        215.56782817917275
+      ],
+      "size": [
+        210,
+        362
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 1394
+        },
+        {
+          "name": "latents",
+          "shape": 7,
+          "type": "LATENT",
+          "link": null
+        },
+        {
+          "name": "masks",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            1395,
+            1416
+          ]
+        },
+        {
+          "name": "latents",
+          "type": "LATENT",
+          "links": null
+        },
+        {
+          "name": "masks",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "extra1",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "extra2",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "extra3",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "indexes",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "cg-image-filter",
+        "ver": "1.6.5",
+        "Node name for S&R": "Image Filter"
+      },
+      "widgets_values": [
+        60,
+        "send none",
+        "Click each image you’d like to keep!",
+        "",
+        "",
+        "",
+        0,
+        "",
+        1,
+        988218
+      ]
+    },
+    {
+      "id": 785,
+      "type": "UpscaleModelLoader",
+      "pos": [
+        -569.1353287917738,
+        334.6751295576886
+      ],
+      "size": [
+        251.41014117295003,
+        58
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "UPSCALE_MODEL",
+          "type": "UPSCALE_MODEL",
+          "links": [
+            1415
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.15.1",
+        "Node name for S&R": "UpscaleModelLoader"
+      },
+      "widgets_values": [
+        "1x-ITF-SkinDiffDetail-Lite-v1.pth"
+      ]
+    },
+    {
+      "id": 784,
+      "type": "ImageUpscaleWithModel",
+      "pos": [
+        -565.511200595187,
+        241.73218945606152
+      ],
+      "size": [
+        233.5689453125,
+        46
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 27,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "upscale_model",
+          "type": "UPSCALE_MODEL",
+          "link": 1415
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1417
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1418
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.15.1",
+        "Node name for S&R": "ImageUpscaleWithModel"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 759,
+      "type": "ETDynamicPrompt",
+      "pos": [
+        -2309.0928125700684,
+        570.306938205127
+      ],
+      "size": [
+        409.57830122818194,
+        478.51684690527213
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "text",
+          "shape": 6,
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "seed",
+          "shape": 6,
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "count",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-et_dynamicprompts",
+        "ver": "22609d26da053e5973310fa0de1df58c80d0ac73",
+        "Node name for S&R": "ETDynamicPrompt"
+      },
+      "widgets_values": [
+        "A candid self-taken photo of a woman with {brunette|blonde|black} hair. She is wearing a skimpy white crop top emphasizing her {large round|small sagging} cleavage and exposing her midriff.\n\nShot in slightly casual indoor lighting, iphone quality photo. Amateur photography. Unfiltered. Real life. Natural light. Subtle shadows. Extreme foreshortening.\n--- amateur photo in warm indoor lighting, (Foreshortening:1.5)",
+        3,
+        "random",
+        "random",
+        1693226202,
+        "randomize"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 748,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -1408.3052226279224,
+        541.9616383859818
+      ],
+      "size": [
+        408.2674743967257,
+        88
+      ],
+      "flags": {
+        "collapsed": true,
+        "pinned": true
+      },
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 1356
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 1420
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            1372
+          ]
+        }
+      ],
+      "title": "CLIP Text Encode (Positive Prompt)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.59",
+        "Node name for S&R": "CLIPTextEncode",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65
+      },
+      "widgets_values": [
+        "A clear photo"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 762,
+      "type": "PreviewImage",
+      "pos": [
+        -1504.6157623708084,
+        1338.832045971413
+      ],
+      "size": [
+        450.1172039579573,
+        569.5604625279681
+      ],
+      "flags": {
+        "collapsed": false,
+        "pinned": true
+      },
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 1395
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.15.1",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": [],
+      "shape": 1
+    },
+    {
+      "id": 749,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -1471.1549019355355,
+        1138.1865000029115
+      ],
+      "size": [
+        405.80979004781443,
+        154.92150860767538
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 1359
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            1373
+          ]
+        }
+      ],
+      "title": "CLIP Text Encode (Negative Prompt)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.59",
+        "Node name for S&R": "CLIPTextEncode",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65
+      },
+      "widgets_values": [
+        "This low quality unfinished sketch is inaccurate and flawed. The image is very blurred and lacks detail with excessive chromatic aberrations and artifacts. The image is overly saturated with excessive bloom. It has a toony aesthetic with bold outlines and flat colors. She is an ugly elderly woman with missing fingers. This image has extremely bright lighting and poor detail. This is flash photography with harsh highlights. The subject has tan skin and unclear features."
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 790,
+      "type": "PromptStashSaver",
+      "pos": [
+        -1468.184310279205,
+        586.8706069350754
+      ],
+      "size": [
+        393.5860065424399,
+        511.97087604663034
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "shape": 7,
+          "type": "STRING",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [
+            1420
+          ]
+        }
+      ],
+      "title": "Positive Prompt (Save/Load)",
+      "properties": {
+        "cnr_id": "confyui-node-prompt-stash-saver",
+        "ver": "1.4.1",
+        "Node name for S&R": "PromptStashSaver"
+      },
+      "widgets_values": [
+        false,
+        "A high-angle candid, amateur-style wide-angle selfie shot taken from a low perspective. A sexy petite young pale skin woman with long wavy blonde loose hair with bangs is sitting on a brown sofa. She has perfect eyelashes and thin mascara. She has full glossy lips. She wears a thin strap plaid navy tube top with soft overflowing huge cleavage, and some navy yoga shorts. She has white hips and thick thighs. Her nipples are not visible and her breasts are not exposed.\n\nThe room is a simple, modern apartment with white walls, a wooden shelf with small trinkets, and a tapestry.\n\n The lighting is natural and hazy, giving it the look of a casual smartphone photo in dim warm lighting. ",
+        "Amateur Photo Basic",
+        "Amateur Photo Basic",
+        "default"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 787,
+      "type": "Note",
+      "pos": [
+        -2451.411859766033,
+        503.37546582215407
+      ],
+      "size": [
+        438.74533035228205,
+        750.0730793760388
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 14,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Prompts! \n\nLighting:  amateur photo in warm indoor lighting, (Foreshortening:1.5)\n\nThe Pose w/ attitude:\nA candid, amateur-style wide-angle selfie shot taken from a low perspective. A sexy petite young pale skin woman with long wavy blonde loose hair with bangs and a small nose piercing stud is lying on her stomach on a messy bed, facing the camera. scrunching her lips with a disgusted attitude. She has perfect eyelashes and thin mascara. Shes taking a selfie while laying on her stomach. She has full glossy lips. She wears a thin strap plaid navy tube top with large slightly overflowing cleavage her nipples are visible and her (spherical medium bubble-butt) is nude. She has a deep buttcrack. Her waist is small. In the background, her bare feet are kicked up toward the ceiling, her entire soles are visible and her pale feet look soft with slightly pink hues with her toes clearly visible, her detailed (toes are angled towards each other with the heels of her feet apart:1.2). She has chubby small short feet. The room is a simple, modern apartment with white walls, a wooden shelf with small trinkets, and a tapestry. The lighting is natural and hazy, giving it the look of a casual smartphone photo.\n\nGluteal fold:\nA candid, (photo shot from above:1.4), full body high-angle amateur-style wide-angle shot taken from a high-angle perspective. A sexy petite young pale skin woman with a slim face with long curly blonde loose hair, peefect detailed face and wearing a necklace is standing straight in her bedroom on the carpet floor, while looking back at viewer, thigh gap, perfect thighs. She has perfect eyelashes and eyes.  She has cute glossy lips. Shes wearing a skimpy tropical pattern bikini with her (slim but spherical perfect bubble-butt) is visible. Her lower glutes has extra fat creating an extreme gluteal fold. Her waist is small.\n\nsmall but heavy hanging buttcheeks, extremely sagging glutes, pendulous drooping buttocks, deep low gluteal fold, pronounced underbutt crease, fat soft ass hanging down, long drooping gluteal fold, cheeks sagging over thighs, heavy low-hanging ass, voluminous lower glutes, soft jiggling flesh, exaggerated fat distribution in lower buttocks, anterior \n(very low attachment point:1.3), (underbutt visible and deep:1.4). Her butt is a small inverted heart-shape.\n\n The room is a simple, modern average bedroom with white walls, a bookshelf, vines, window, a messy bed, a rug, shelves, posters, and a tapestry. The lighting is natural and hazy, giving it the look of a casual smartphone photo."
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    }
+  ],
+  "links": [
+    [
+      1252,
+      710,
+      0,
+      298,
+      1,
+      "VAE"
+    ],
+    [
+      1342,
+      733,
+      0,
+      741,
+      0,
+      "CLIP"
+    ],
+    [
+      1356,
+      741,
+      0,
+      748,
+      0,
+      "CLIP"
+    ],
+    [
+      1359,
+      741,
+      0,
+      749,
+      0,
+      "CLIP"
+    ],
+    [
+      1372,
+      748,
+      0,
+      751,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      1373,
+      749,
+      0,
+      751,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      1375,
+      737,
+      0,
+      751,
+      3,
+      "LATENT"
+    ],
+    [
+      1376,
+      751,
+      0,
+      298,
+      0,
+      "LATENT"
+    ],
+    [
+      1379,
+      753,
+      0,
+      752,
+      1,
+      "SEEDVR2_DIT"
+    ],
+    [
+      1380,
+      754,
+      0,
+      752,
+      2,
+      "SEEDVR2_VAE"
+    ],
+    [
+      1381,
+      756,
+      1,
+      737,
+      1,
+      "INT"
+    ],
+    [
+      1382,
+      756,
+      0,
+      737,
+      0,
+      "INT"
+    ],
+    [
+      1394,
+      298,
+      0,
+      764,
+      0,
+      "IMAGE"
+    ],
+    [
+      1395,
+      764,
+      0,
+      762,
+      0,
+      "IMAGE"
+    ],
+    [
+      1398,
+      701,
+      0,
+      751,
+      0,
+      "MODEL"
+    ],
+    [
+      1404,
+      731,
+      0,
+      781,
+      0,
+      "MODEL"
+    ],
+    [
+      1405,
+      781,
+      0,
+      701,
+      0,
+      "MODEL"
+    ],
+    [
+      1408,
+      781,
+      0,
+      780,
+      0,
+      "MODEL"
+    ],
+    [
+      1415,
+      785,
+      0,
+      784,
+      0,
+      "UPSCALE_MODEL"
+    ],
+    [
+      1416,
+      764,
+      0,
+      752,
+      0,
+      "IMAGE"
+    ],
+    [
+      1417,
+      752,
+      0,
+      784,
+      1,
+      "IMAGE"
+    ],
+    [
+      1418,
+      784,
+      0,
+      783,
+      0,
+      "IMAGE"
+    ],
+    [
+      1420,
+      790,
+      0,
+      748,
+      1,
+      "STRING"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 4,
+      "title": "Sampler Settings",
+      "bounding": [
+        -1839.5618986715417,
+        470.72727014117726,
+        336.6986572877088,
+        745.291275739496
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 5,
+      "title": "Step 1: Load models",
+      "bounding": [
+        -2207.340561424113,
+        -58.31053651550003,
+        443.72953584650736,
+        514.002391226411
+      ],
+      "color": "#8AA",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 6,
+      "title": "Optional",
+      "bounding": [
+        -1395.3025884162344,
+        -90.31455834176661,
+        276.7966800766194,
+        544.1470257891569
+      ],
+      "color": "#88A",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 7,
+      "title": "Step 2: Image Size & Filter",
+      "bounding": [
+        -1105.4457361987434,
+        -80.16258744248431,
+        505.61007500526864,
+        527.3629745754131
+      ],
+      "color": "#a1309b",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 8,
+      "title": "Step 3: Prompt",
+      "bounding": [
+        -1482.881399600965,
+        468.88824150152294,
+        422.2914727543466,
+        831.2918807101219
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 9,
+      "title": "Finalize: Skin Detail + Upscale with SEEDVR2",
+      "bounding": [
+        -585.0552663616995,
+        -80.41278566364535,
+        845.4220544415078,
+        535.8634535673302
+      ],
+      "color": "#b58b2a",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 10,
+      "title": "Dynamic Prompts (Optional)",
+      "bounding": [
+        -2358.8968092680275,
+        475.3471914858135,
+        497.9139190936628,
+        735.1084494905682
+      ],
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 11,
+      "title": "Step 1.5: Load Loras",
+      "bounding": [
+        -1751.538471155575,
+        -57.52356236155849,
+        341.6570767663668,
+        513.2746335094515
+      ],
+      "color": "#8AA",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.45420026834015675,
+      "offset": [
+        1960.3041327040614,
+        87.0291250788278
+      ]
+    },
+    "frontendVersion": "1.39.19",
+    "workflowRendererVersion": "LG",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}

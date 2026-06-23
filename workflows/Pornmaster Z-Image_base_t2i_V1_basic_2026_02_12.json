@@ -1,0 +1,759 @@
+{
+  "id": "6aa22b9a-045a-471b-866c-f5ce8df390f2",
+  "revision": 0,
+  "last_node_id": 154,
+  "last_link_id": 412,
+  "nodes": [
+    {
+      "id": 100,
+      "type": "VAELoader",
+      "pos": [
+        -218.77807981738374,
+        42.63209429892191
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            313
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        "z image\\ae.safetensors"
+      ]
+    },
+    {
+      "id": 110,
+      "type": "ModelSamplingAuraFlow",
+      "pos": [
+        -228.79747142843618,
+        182.5943793267009
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 334
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            335
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelSamplingAuraFlow",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.76"
+      },
+      "widgets_values": [
+        3
+      ]
+    },
+    {
+      "id": 99,
+      "type": "CLIPLoader",
+      "pos": [
+        -485.98618634820605,
+        20.357458600128407
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            312
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        "z image\\qweb_3_4b.safetensors",
+        "lumina2",
+        "default"
+      ]
+    },
+    {
+      "id": 30,
+      "type": "VAEDecode",
+      "pos": [
+        -248.8626509117472,
+        936.950594500556
+      ],
+      "size": [
+        140,
+        50
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 197
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 313
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            408
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.61"
+      },
+      "widgets_values": [],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 106,
+      "type": "SaveImage",
+      "pos": [
+        75.73419862812611,
+        696.4911951429536
+      ],
+      "size": [
+        393.3962083069025,
+        647.731185513515
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 409
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        "comfyui_無面部修復"
+      ]
+    },
+    {
+      "id": 152,
+      "type": "PlaySound|pysssss",
+      "pos": [
+        -250.0920032004362,
+        1199.3593029565052
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "link": 410
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "shape": 6,
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PlaySound|pysssss"
+      },
+      "widgets_values": [
+        "always",
+        0.5,
+        "notify.mp3"
+      ]
+    },
+    {
+      "id": 151,
+      "type": "easy cleanGpuUsed",
+      "pos": [
+        -208.26588675891426,
+        1100.1347304020476
+      ],
+      "size": [
+        161.3404296875,
+        26
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 408
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            409,
+            410
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy cleanGpuUsed",
+        "cnr_id": "comfyui-easy-use",
+        "ver": "1.3.3"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 154,
+      "type": "MarkdownNote",
+      "pos": [
+        -1589.1476179082767,
+        -4.992497148198612
+      ],
+      "size": [
+        510,
+        420
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Model link (for local users)",
+      "properties": {},
+      "widgets_values": [
+        "## Model links\n\n**text_encoders**\n\n- [qwen_3_4b.safetensors](https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/text_encoders/qwen_3_4b.safetensors)\n\n**diffusion_models**\n\n- [z_image_bf16.safetensors](https://huggingface.co/Comfy-Org/z_image/resolve/main/split_files/diffusion_models/z_image_bf16.safetensors)\n\n**vae**\n\n- [ae.safetensors](https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/vae/ae.safetensors)\n\n\nModel Storage Location\n\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 text_encoders/\n│   │      └── qwen_3_4b.safetensors\n│   ├── 📂 diffusion_models/\n│   │      └── z_image_bf16.safetensors\n│   └── 📂 vae/\n│          └── ae.safetensors\n```\n"
+      ],
+      "color": "#432",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 98,
+      "type": "UNETLoader",
+      "pos": [
+        -916.6394201383445,
+        33.78131574305437
+      ],
+      "size": [
+        419.6627688413553,
+        82
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            311
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        "z image base\\z_image_base_bf16.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 29,
+      "type": "EmptyLatentImage",
+      "pos": [
+        -287.20133669783525,
+        740.2645857938584
+      ],
+      "size": [
+        310,
+        130
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            184
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.61"
+      },
+      "widgets_values": [
+        832,
+        1216,
+        1
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 84,
+      "type": "Lora Loader (LoraManager)",
+      "pos": [
+        94.80080088510064,
+        48.34365036923406
+      ],
+      "size": [
+        411.4241027832031,
+        563.52978515625
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 311
+        },
+        {
+          "name": "clip",
+          "shape": 7,
+          "type": "CLIP",
+          "link": 312
+        },
+        {
+          "name": "lora_stack",
+          "shape": 7,
+          "type": "LORA_STACK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            334
+          ]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            309,
+            412
+          ]
+        },
+        {
+          "name": "trigger_words",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "loaded_loras",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Lora Loader (LoraManager)",
+        "cnr_id": "comfyui-lora-manager",
+        "ver": "392c157cb531805888d4d5054db58dd38ac721ee"
+      },
+      "widgets_values": [
+        "<lora:Z-Image-Fun-Lora-Distill-4-Steps-2602-ComfyUI:0.95>",
+        [
+          {
+            "name": "Z-Image-Fun-Lora-Distill-4-Steps-2602-ComfyUI",
+            "strength": "0.95",
+            "active": true,
+            "expanded": false,
+            "clipStrength": "0.95"
+          }
+        ]
+      ]
+    },
+    {
+      "id": 63,
+      "type": "KSamplerAdvanced",
+      "pos": [
+        -243.27216680456905,
+        309.49872158408823
+      ],
+      "size": [
+        270,
+        334
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 335
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 285
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 411
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 184
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            197
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.61"
+      },
+      "widgets_values": [
+        "enable",
+        226341611055410,
+        "randomize",
+        8,
+        2,
+        "euler",
+        "simple",
+        0,
+        9999,
+        "disable"
+      ]
+    },
+    {
+      "id": 153,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -863.3568067763249,
+        948.677861560292
+      ],
+      "size": [
+        449.2210291319293,
+        282.47092515928307
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 412
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            411
+          ]
+        }
+      ],
+      "title": "負面提示詞 (Negative Prompt)",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core",
+        "ver": "0.8.2",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65
+      },
+      "widgets_values": [
+        "低质量，模糊，扭曲，丑陋，多余的手指，变形的脸，不对称的眼睛，错位的牙齿，重复的纹理，嗓点，压缩伪影，水印，文字，边框，网格线，3D渲染，CG，渲染感，过度曝光，阴影过重，色彩失真，平面化，缺乏细节，简笔画，动作僵硬，畸形，丑态，"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 90,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -889.6776883930802,
+        185.93900226513344
+      ],
+      "size": [
+        568.4045736507657,
+        648.8738038919435
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 309
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            285
+          ]
+        }
+      ],
+      "title": "正面提示詞 (positive)",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.62"
+      },
+      "widgets_values": [
+        "Create a high-fashion, dramatic image depicting a woman intimately embracing a vibrant red horse. The woman is in the foreground, with pale skin, striking blue eyes, and bold red lips. She is styled with slicked-back dark hair, wearing a high-necked black sequined dress adorned with feathery embellishments and large, sparkling crystal earrings. The horse, also painted a rich red hue, is positioned close to the woman, creating a sense of connection. The background is a dark, undefined space with subtle, blurred elements suggesting a misty, potentially snowy atmosphere. The style should evoke a feeling of high glamour, with a touch of gothic romance and mystery. The image should be beautifully lit, with a focus on capturing the textures of the horse's coat, the woman's skin and dress. The overall mood is cold yet sensual, elegant and intense."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    }
+  ],
+  "links": [
+    [
+      184,
+      29,
+      0,
+      63,
+      3,
+      "LATENT"
+    ],
+    [
+      197,
+      63,
+      0,
+      30,
+      0,
+      "LATENT"
+    ],
+    [
+      285,
+      90,
+      0,
+      63,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      309,
+      84,
+      1,
+      90,
+      0,
+      "CLIP"
+    ],
+    [
+      311,
+      98,
+      0,
+      84,
+      0,
+      "MODEL"
+    ],
+    [
+      312,
+      99,
+      0,
+      84,
+      1,
+      "CLIP"
+    ],
+    [
+      313,
+      100,
+      0,
+      30,
+      1,
+      "VAE"
+    ],
+    [
+      334,
+      84,
+      0,
+      110,
+      0,
+      "MODEL"
+    ],
+    [
+      335,
+      110,
+      0,
+      63,
+      0,
+      "MODEL"
+    ],
+    [
+      408,
+      30,
+      0,
+      151,
+      0,
+      "IMAGE"
+    ],
+    [
+      409,
+      151,
+      0,
+      106,
+      0,
+      "IMAGE"
+    ],
+    [
+      410,
+      151,
+      0,
+      152,
+      0,
+      "*"
+    ],
+    [
+      411,
+      153,
+      0,
+      63,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      412,
+      84,
+      1,
+      153,
+      0,
+      "CLIP"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 6,
+      "title": "基本文生圖檢查站和lora (T2I and lora)",
+      "bounding": [
+        -925.6566601001317,
+        -65.51558498011956,
+        1475.155026487028,
+        1460.273706724586
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.8508019396488226,
+      "offset": [
+        824.0359365728281,
+        -581.1414100251903
+      ]
+    },
+    "frontendVersion": "1.37.11",
+    "workflowRendererVersion": "LG",
+    "groupNodes": {},
+    "controller_panel": {
+      "controllers": {},
+      "hidden": true,
+      "highlight": true,
+      "version": 2,
+      "default_order": []
+    },
+    "node_versions": {
+      "comfy-core": "0.3.14",
+      "comfyui-impact-subpack": "74db20c95eca152a6d686c914edc0ef4e4762cb8",
+      "comfyui-impact-pack": "1ae7cae2df8cca06027edfa3a24512671239d6c4"
+    },
+    "ue_links": [],
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}
